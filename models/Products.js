@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 export const productEntityName = "Products";
 export const productSchemaDef = {
-  product_name: {
+  productName: {
     type: String,
     required: true,
   },
-  product_price: {
+  productPrice: {
     type: Number,
     required: true,
   },
@@ -21,6 +21,19 @@ export const productSchemaDef = {
 };
 export const productSchema = new mongoose.Schema(productSchemaDef, {
   timestamps: true,
+  virtuals: {
+    createdAtTimestamp: {
+      get() {
+        return this.createdAt.getTime();
+      },
+    },
+    updatedAtTimestamp: {
+      get() {
+        return this.updatedAt.getTime();
+      },
+    },
+  }
 });
 
-export const ProductModel = mongoose.model(productEntityName, productSchema);
+const ProductModel = mongoose.model(productEntityName, productSchema);
+export default ProductModel;

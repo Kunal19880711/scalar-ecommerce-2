@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-export async function connectToDb() {
+export default async function connectToDb() {
     dotenv.config();
 
     const userId = process.env.MONGO_USERID;
