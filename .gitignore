@@ -1,5 +1,12 @@
+# NodeJS
 node_modules
-.env
+
+# Visual Studio Code
+.vscode
 
 # misc
 .backup
+
+# config
+devConfig.yaml
+.env
