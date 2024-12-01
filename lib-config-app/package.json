@@ -1,0 +1,16 @@
+{
+  "name": "lib-config-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": "./lib/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Load configuration from yaml file",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
