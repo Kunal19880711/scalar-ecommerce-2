@@ -1,0 +1,17 @@
+{
+  "name": "lib-constants-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": "./lib/main.js"
+  },
+  "peerDependencies": {
+    "mongo": "^0.1.0",
+    "mongoose": "^8.7.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
