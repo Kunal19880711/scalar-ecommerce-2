@@ -1,0 +1,16 @@
+{
+  "name": "lib-utils-email",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": "./lib/emailHelper.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Utilities to send Emails",
+  "peerDependencies": {
+    "nodemailer": "^6.9.15"
+  }
+}
