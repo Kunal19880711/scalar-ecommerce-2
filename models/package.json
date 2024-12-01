@@ -1,0 +1,20 @@
+{
+  "name": "models",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "exports": {
+    "./*": "./lib/*.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Mongoose models for all Microservices",
+  "peerDependencies": {
+    "mongo": "^0.1.0",
+    "mongoose": "^8.7.0"
+  },
+  "dependencies": {
+    "lib-constants-system": "file:../lib-constants-system"
+  }
+}
