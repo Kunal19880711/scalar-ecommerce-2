@@ -5,6 +5,7 @@ export default async function connectToDb() {
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 20000,
   };
   await mongoose.connect(url, options);
 }
