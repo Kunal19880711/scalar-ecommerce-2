@@ -19,3 +19,5 @@ Microservice version of Scalar Ecommerce
     4. Profile
     5. Password recovery
 3. File Upload + link MS
+
+1. Monorepo with pnpm and nx: [https://www.youtube.com/watch?v=ngdoUQBvAjo&ab_channel=Nx-SmartMonorepos-FastCI]
