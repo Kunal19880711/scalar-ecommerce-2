@@ -71,7 +71,7 @@ const ResetPasswordView = ({
           {l10n.RESET_PASS_GENERATE_OTP_BTN_LABEL}
         </Button>
         {apiGenerateOtpErrMsg && (
-          <Typography variant="caption" color="error">
+          <Typography variant="body1" color="error">
             {apiGenerateOtpErrMsg}
           </Typography>
         )}
@@ -97,7 +97,7 @@ const ResetPasswordView = ({
           {l10n.RESET_PASS_BTN_LABEL}
         </Button>
         {apiResetPassErrorMsg && (
-          <Typography variant="caption" color="error">
+          <Typography variant="body1" color="error">
             {apiResetPassErrorMsg}
           </Typography>
         )}

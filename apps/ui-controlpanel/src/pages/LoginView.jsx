@@ -64,7 +64,7 @@ const LoginView = ({ onLoginSubmit, apiErrorMsg }) => {
           {l10n.LOGIN_BTN_LABEL}
         </Button>
         {apiErrorMsg && (
-          <Typography variant="caption" color="error">
+          <Typography variant="body1" color="error">
             {apiErrorMsg}
           </Typography>
         )}

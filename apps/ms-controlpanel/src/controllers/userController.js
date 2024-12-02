@@ -104,7 +104,7 @@ export const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email) {
-      throw new HttpError(400, "Please enter EMail for forgot password");
+      throw new HttpError(400, "Please enter E-Mail for forgot password");
     }
 
     const user = await User.findOne({ email });
@@ -140,7 +140,7 @@ export const resetPassword = async (req, res, next) => {
     const user = await User.findOne({
       email,
       otp,
-    });
+    }).select("+otp +otpExpiry");
     if (!user) {
       throw new HttpError(400, "Invalid OTP.");
     }

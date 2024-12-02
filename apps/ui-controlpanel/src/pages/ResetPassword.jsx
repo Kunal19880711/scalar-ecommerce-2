@@ -6,9 +6,12 @@ import { showLoading, hideLoading } from "../redux/loaderSlice";
 import EnsureLoginStatus, {
   LoginStatus,
 } from "../components/EnsureLoginStatus";
+import { useNavigate } from "react-router-dom";
+import Paths from "../constants/Paths";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [apiGenerateOtpErrMsg, setApiGenerateOtpErrMsg] = useState(null);
   const [apiResetPassErrorMsg, setApiResetPassErrorMsg] = useState(null);
@@ -29,6 +32,7 @@ const ResetPassword = () => {
     dispatch(showLoading());
     try {
       const response = await resetPassword(data);
+      navigate(Paths.Login);
     } catch (error) {
       console.log(error);
       setApiResetPassErrorMsg(error.response.data.message);
