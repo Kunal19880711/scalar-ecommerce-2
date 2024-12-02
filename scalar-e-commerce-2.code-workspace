@@ -36,13 +36,10 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Launch via NPM",
         "type": "node",
         "request": "launch",
-        "cwd": "${workspaceFolder}/run-fullstack",
-        "runtimeArgs": ["run-script", "dev"],
-        "runtimeExecutable": "npm",
-        "skipFiles": ["<node_internals>/**"],
+        "name": "Launch controlpanel",
+        "program": "${workspaceFolder}/apps/ms-controlpanel/src/server.js",
         "console": "integratedTerminal"
       }
     ]
