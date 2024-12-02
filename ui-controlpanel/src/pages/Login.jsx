@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import LoginView from "./LoginView";
 import { login } from "../api/user";
+import { showLoading, hideLoading } from "../redux/loaderSlice";
 import EnsureLoginStatus, {
   LoginStatus,
 } from "../components/EnsureLoginStatus";
