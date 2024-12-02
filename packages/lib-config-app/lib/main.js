@@ -7,7 +7,7 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const configFilePath = path.join(
   __dirname,
-  ...new Array(2).fill(".."),
+  ...new Array(3).fill(".."),
   "config.yaml"
 );
 
