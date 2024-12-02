@@ -6,7 +6,9 @@ import { emailHelper, EMailTemplates } from "lib-utils-email";
 
 export const loginUser = async (req, res, next) => {
   try {
-    const userExists = await User.findOne({ email: req?.body?.email });
+    const userExists = await User.findOne({ email: req?.body?.email }).select(
+      "+password"
+    );
 
     if (!userExists) {
       throw new HttpError(400, "User doesn't exists. Please register.");
