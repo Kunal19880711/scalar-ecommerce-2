@@ -11,6 +11,9 @@ export const LoginStatus = {
 const EnsureLoginStatus = ({ status, children }) => {
   const navigate = useNavigate();
   const { user, initializing } = useSelector((store) => store.user);
+  const shouldDisplayChildren =
+    (user && status === LoginStatus.LoggedIn) ||
+    (!user && status === LoginStatus.LoggedOut);
   useEffect(() => {
     if (initializing) {
       return;
@@ -23,7 +26,7 @@ const EnsureLoginStatus = ({ status, children }) => {
       navigate(Paths.Login);
     }
   }, [user, initializing]);
-  return <>{children}</>;
+  return <>{shouldDisplayChildren && children}</>;
 };
 
 export default EnsureLoginStatus;

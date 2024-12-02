@@ -16,8 +16,6 @@ import Paths from "../constants/Paths";
 import l10n from "../constants/l10n";
 
 const NavBarView = ({ user, onLogout }) => {
-  const navigate = useNavigate();
-
   const pages = [
     { title: l10n.NAV_BAR_PAGE_MICROSERVICE, path: Paths.MicroServices },
     { title: l10n.NAV_BAR_PAGE_ADMIN_USERS, path: Paths.AdminUser },
@@ -30,6 +28,7 @@ const NavBarView = ({ user, onLogout }) => {
     { title: l10n.NAV_BAR_SETTING_LOGOUT, action: onLogout },
   ];
 
+  const navigate = useNavigate();
   const [showLeftPanel, setLeftPanel] = useState(false);
   const [showRightPanel, setShowRightPanel] = useState(false);
   const shortName = (user.name || "")
