@@ -9,20 +9,20 @@
   "description": "Microservice for control panel",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "lib-config-app": "file:../lib-config-app",
-    "lib-config-db": "file:../lib-config-db",
-    "lib-constants-system": "file:../lib-constants-system",
+    "lib-config-app": "file:../../packages/lib-config-app",
+    "lib-config-db": "file:../../packages/lib-config-db",
+    "lib-constants-system": "file:../../packages/lib-constants-system",
     "cookie-parser": "^1.4.7",
     "express": "^4.21.1",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^7.4.1",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "models": "file:../models",
+    "models": "file:../../packages/models",
     "mongo": "^0.1.0",
     "mongoose": "^8.8.2",
-    "lib-utils-email": "file:../lib-utils-email",
-    "lib-utils-webserver": "file:../lib-utils-webserver"
+    "lib-utils-email": "file:../../packages/lib-utils-email",
+    "lib-utils-webserver": "file:../../packages/lib-utils-webserver"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
