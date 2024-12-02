@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/bms": {
+      "/e-commerce": {
         target: "http://localhost:8000",
         changeOrigin: true,
         secure: false,
