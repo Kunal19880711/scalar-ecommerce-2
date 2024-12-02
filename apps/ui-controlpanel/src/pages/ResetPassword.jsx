@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import ResetPasswordView from "./ResetPasswordView";
 import { forgotPassword, resetPassword } from "../api/user";
 import { showLoading, hideLoading } from "../redux/loaderSlice";
 import EnsureLoginStatus, {
   LoginStatus,
 } from "../components/EnsureLoginStatus";
-import { useNavigate } from "react-router-dom";
 import Paths from "../constants/Paths";
 
 const ResetPassword = () => {
