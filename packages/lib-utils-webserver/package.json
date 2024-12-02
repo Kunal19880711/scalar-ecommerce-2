@@ -14,9 +14,11 @@
   "peerDependencies": {
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "models": "file:../models",
-    "lib-constants-system": "file:../lib-constants-system",
     "mongo": "^0.1.0",
-    "mongoose": "^8.7.0"
+    "mongoose": "^8.8.2"
+  },
+  "dependencies": {
+    "models": "file:../models",
+    "lib-constants-system": "file:../lib-constants-system"
   }
 }

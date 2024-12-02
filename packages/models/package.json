@@ -12,7 +12,7 @@
   "description": "Mongoose models for all Microservices",
   "peerDependencies": {
     "mongo": "^0.1.0",
-    "mongoose": "^8.7.0"
+    "mongoose": "^8.8.2"
   },
   "dependencies": {
     "lib-constants-system": "file:../lib-constants-system"

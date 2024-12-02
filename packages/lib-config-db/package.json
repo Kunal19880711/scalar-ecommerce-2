@@ -8,7 +8,7 @@
   },
   "peerDependencies": {
     "mongo": "^0.1.0",
-    "mongoose": "^8.7.0"
+    "mongoose": "^8.8.2"
   },
   "keywords": [],
   "author": "",
