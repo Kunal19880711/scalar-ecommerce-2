@@ -1,0 +1,19 @@
+{
+  "name": "db-migrations",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "commander": "^12.1.0",
+    "lib-config-app": "file:../../packages/lib-config-app",
+    "lib-config-db": "file:../../packages/lib-config-db",
+    "models": "file:../../packages/models",
+    "mongo": "^0.1.0",
+    "mongoose": "^8.8.2"
+  }
+}
