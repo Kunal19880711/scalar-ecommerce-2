@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import constants from "lib-constants-system";
 
-export const userEntityName = "Users";
+export const userEntityName = "users";
 export const userSchemaDef = {
   name: {
     type: String,
