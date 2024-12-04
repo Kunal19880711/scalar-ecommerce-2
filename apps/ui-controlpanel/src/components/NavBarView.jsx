@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,7 +15,7 @@ import Drawer from "@mui/material/Drawer";
 import Paths from "../constants/Paths";
 import l10n from "../constants/l10n";
 
-const NavBarView = ({ user, onLogout }) => {
+const NavBarView = ({ user, onLogout, updateTooltipHeight }) => {
   const pages = [
     { title: l10n.NAV_BAR_PAGE_MICROSERVICE, path: Paths.MicroServices },
     { title: l10n.NAV_BAR_PAGE_ADMIN_USERS, path: Paths.AdminUser },
@@ -31,6 +31,7 @@ const NavBarView = ({ user, onLogout }) => {
   const navigate = useNavigate();
   const [showLeftPanel, setLeftPanel] = useState(false);
   const [showRightPanel, setShowRightPanel] = useState(false);
+  const tooltip = useRef(null);
   const shortName = (user.name || "")
     .split(" ")
     .map((s) => s[0].toUpperCase())
@@ -90,6 +91,12 @@ const NavBarView = ({ user, onLogout }) => {
     </Button>
   ));
 
+  useEffect(() => {
+    if (tooltip.current) {
+      updateTooltipHeight(tooltip.current.clientHeight);
+    }
+  }, []);
+
   return (
     <>
       <AppBar
@@ -99,7 +106,7 @@ const NavBarView = ({ user, onLogout }) => {
           zIndex: 1400,
         }}
       >
-        <Toolbar>
+        <Toolbar ref={tooltip}>
           <Box
             sx={{
               display: { xs: "flex", md: "none" },

@@ -28,6 +28,21 @@ const strings = new LocalizedStrings({
     NAV_BAR_SETTING_PROFILE: "Profile",
     NAV_BAR_SETTING_LOGOUT: "Logout",
     NAV_BAR_TOOLTIP_OPEN_SETTINGS: "Open Settings",
+
+    ADMINUSER_FORM_TITLE_CREATE_ADMIN: "Create Admin User",
+    ADMINUSER_FORM_TITLE_UPDATE_ADMIN: "Update Admin User",
+    ADMINUSER_FORM_NAME_LABEL: "Name",
+    ADMINUSER_FORM_NAME_ERR_MSG: "Name is mandatory",
+    ADMINUSER_FORM_EMAIL_LABEL: "E-Mail",
+    ADMINUSER_FORM_EMAIL_ERR_MSG: "E-Mail is mandatory",
+    ADMINUSER_FORM_PASSWORD_LABEL: "Password",
+    ADMINUSER_FORM_PASSWORD_ERR_MSG: "Password is mandatory",
+    ADMINUSER_FORM_CREATE_BTN_LABEL: "Create Admin",
+    ADMINUSER_FORM_UPDATE_BTN_LABEL: "Update Admin",
+
+    ADMINUSER_TABLE_COL_NAME: "Name",
+    ADMINUSER_TABLE_COL_EMAIL: "E-Mail",
+    ADMINUSER_TABLE_COL_ACTIONS: "Actions",
   },
 });
 

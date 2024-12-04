@@ -8,9 +8,7 @@ export const addAdmin = async (req, res, next) => {
     const userExists = await User.findOne({ email: req?.body?.email });
 
     if (userExists) {
-      return res
-        .status(200)
-        .json({ message: "User already exists", success: true });
+      throw new HttpError(409, "User already exists");
     }
 
     const userData = req.body || {};
