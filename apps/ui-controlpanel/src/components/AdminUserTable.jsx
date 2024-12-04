@@ -8,7 +8,7 @@ import l10n from "../constants/l10n";
 
 const AdminUserTable = ({ data, onSelect, onDelete }) => {
   const tableParent = useRef(null);
-  const [tableHeight, setTableHeight] = useState(500);
+  const [tableHeight, setTableHeight] = useState(500); // a ball park value
   const paginationModel = { page: 0, pageSize: 10 };
   const columns = [
     { field: "name", headerName: l10n.ADMINUSER_TABLE_COL_NAME, width: 150 },
