@@ -1,16 +1,16 @@
 import express from "express";
 import {
-  getAllMicroServices,
-  createMicroService,
-  updateMicroService,
-  deleteMicroService,
+  getAllMicroservices,
+  createMicroservice,
+  updateMicroservice,
+  deleteMicroservice,
 } from "../controllers/microserviceController.js";
 
 const router = express.Router();
 
-router.get("/getAllMicroServices", getAllMicroServices);
-router.post("/createMicroService", createMicroService);
-router.patch("/updateMicroService/:id", updateMicroService);
-router.delete("/deleteMicroService/:id", deleteMicroService);
+router.get("/getAllMicroservices", getAllMicroservices);
+router.post("/createMicroservice", createMicroservice);
+router.patch("/updateMicroservice/:id", updateMicroservice);
+router.delete("/deleteMicroservice/:id", deleteMicroservice);
 
 export default router;

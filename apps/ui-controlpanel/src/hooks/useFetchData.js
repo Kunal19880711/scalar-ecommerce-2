@@ -22,7 +22,7 @@ const useFetchData = (dataFetcher, options = {}) => {
         : response?.data;
       setData(data);
       setError(null);
-    } catch (err) {
+    } catch (error) {
       setData(defaultValue);
       setError(error.response.data.message);
     } finally {

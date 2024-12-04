@@ -1,10 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import AdminUserForm from "../components/AdminUserForm";
-import AdminUserTable from "../components/AdminUserTable";
+import MicroserviceForm from "../components/MicroservicesForm";
+import MicroserviceTable from "../components/MicroservicesTable";
 
-const AdminUsersView = ({
+const MicroservicesView = ({
   tooltipHeight,
   data,
   fetchErrMsg,
@@ -40,7 +40,7 @@ const AdminUsersView = ({
         elevation={3}
         sx={{ flexBasis: 1, m: 2, p: 2, width: { xs: "90%", md: 810 } }}
       >
-        <AdminUserForm
+        <MicroserviceForm
           selectedRow={selectedRow}
           onCreateOrUpdateSubmit={onCreateOrUpdateSubmit}
           onCancelEdit={onCancelEdit}
@@ -56,7 +56,7 @@ const AdminUsersView = ({
           width: { xs: "90%", md: 810 },
         }}
       >
-        <AdminUserTable
+        <MicroserviceTable
           data={data}
           onSelect={setSelectedRow}
           onDelete={onDelete}
@@ -66,4 +66,4 @@ const AdminUsersView = ({
   );
 };
 
-export default AdminUsersView;
+export default MicroservicesView;

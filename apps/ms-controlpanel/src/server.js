@@ -19,6 +19,7 @@ import { authorizeAdmin } from "lib-utils-webserver/middlewares/authorize";
 
 import userRoute from "./routes/userRoute.js";
 import adminUserRoute from "./routes/adminUserRoute.js";
+import microserviceRoute from "./routes/microserviceRoute.js";
 
 const port = 8000;
 const serviceName = "CONTROL_PANEL";
@@ -52,7 +53,7 @@ app.use(
   `${apiBasePath}/microservice`,
   validateJWTToken,
   authorizeAdmin,
-  adminUserRoute
+  microserviceRoute
 );
 
 app.use(handleParsingError);

@@ -13,28 +13,24 @@ import l10n from "../constants/l10n";
 import FormBox from "./FormBox";
 
 const initialValue = {
-  name: "",
-  email: "",
-  password: "",
+  serviceName: "",
+  serviceUrl: "",
 };
 
-const AdminUserForm = ({
+const schema = yup.object().shape({
+  serviceName: yup
+    .string()
+    .required(l10n.MICROSERVICE_FORM_SERVICE_NAME_ERR_MSG),
+  serviceUrl: yup.string().required(l10n.MICROSERVICE_FORM_SERVICE_URL_ERR_MSG),
+});
+
+const MicroservicesForm = ({
   selectedRow,
   onCreateOrUpdateSubmit,
   onCancelEdit,
   createUpdateErrMsg,
 }) => {
   const isNew = selectedRow === null;
-  const formShape = {
-    name: yup.string().required(l10n.ADMINUSER_FORM_NAME_ERR_MSG),
-    email: yup.string().email().required(l10n.ADMINUSER_FORM_EMAIL_ERR_MSG),
-  };
-  if (isNew) {
-    formShape.password = yup
-      .string()
-      .required(l10n.ADMINUSER_FORM_PASSWORD_ERR_MSG);
-  }
-  const schema = yup.object().shape(formShape);
   const {
     register,
     handleSubmit,
@@ -78,44 +74,35 @@ const AdminUserForm = ({
     >
       <Typography variant="h5" component="h1">
         {isNew
-          ? l10n.ADMINUSER_FORM_TITLE_CREATE_ADMIN
-          : l10n.ADMINUSER_FORM_TITLE_UPDATE_ADMIN}
+          ? l10n.MICROSERVICE_FORM_TITLE_CREATE_MICROSERVICE
+          : l10n.MICROSERVICE_FORM_TITLE_UPDATE_MICROSERVICE}
       </Typography>
       <FormBox fullWidth>
-        <InputLabel required>{l10n.ADMINUSER_FORM_NAME_LABEL}</InputLabel>
+        <InputLabel required>
+          {l10n.MICROSERVICE_FORM_SERVICE_NAME_LABEL}
+        </InputLabel>
         <TextField
           variant="standard"
           type="text"
           fullWidth
-          {...register("name")}
-          error={!!errors.name}
-          helperText={errors.name?.message}
+          {...register("serviceName")}
+          error={!!errors.serviceName}
+          helperText={errors.serviceName?.message}
         />
       </FormBox>
       <FormBox fullWidth>
-        <InputLabel required>{l10n.ADMINUSER_FORM_EMAIL_LABEL}</InputLabel>
+        <InputLabel required>
+          {l10n.MICROSERVICE_FORM_SERVICE_URL_LABEL}
+        </InputLabel>
         <TextField
           variant="standard"
-          type="email"
+          type="text"
           fullWidth
-          {...register("email")}
-          error={!!errors.email}
-          helperText={errors.email?.message}
+          {...register("serviceUrl")}
+          error={!!errors.serviceUrl}
+          helperText={errors.serviceUrl?.message}
         />
       </FormBox>
-      {isNew && (
-        <FormBox fullWidth>
-          <InputLabel required>{l10n.ADMINUSER_FORM_PASSWORD_LABEL}</InputLabel>
-          <TextField
-            variant="standard"
-            type="password"
-            fullWidth
-            {...register("password")}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-          />
-        </FormBox>
-      )}
       {createUpdateErrMsg && (
         <Typography variant="body1" color="error">
           {createUpdateErrMsg}
@@ -124,15 +111,15 @@ const AdminUserForm = ({
       <Box sx={{ display: "flex", gap: "1em", width: "100%" }}>
         <Button fullWidth variant="contained" type="submit">
           {isNew
-            ? l10n.ADMINUSER_FORM_CREATE_BTN_LABEL
-            : l10n.ADMINUSER_FORM_UPDATE_BTN_LABEL}
+            ? l10n.MICROSERVICE_FORM_CREATE_BTN_LABEL
+            : l10n.MICROSERVICE_FORM_UPDATE_BTN_LABEL}
         </Button>
         <Button fullWidth variant="outlined" type="button" onClick={onCancel}>
-        {l10n.CANCEL_BTN_LABEL}
+          {l10n.CANCEL_BTN_LABEL}
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default AdminUserForm;
+export default MicroservicesForm;

@@ -6,13 +6,21 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import l10n from "../constants/l10n";
 
-const AdminUserTable = ({ data, onSelect, onDelete }) => {
+const MicroservicesTable = ({ data, onSelect, onDelete }) => {
   const tableParent = useRef(null);
   const [tableHeight, setTableHeight] = useState(500); // a ball park value
   const paginationModel = { page: 0, pageSize: 10 };
   const columns = [
-    { field: "name", headerName: l10n.ADMINUSER_TABLE_COL_NAME, width: 150 },
-    { field: "email", headerName: l10n.ADMINUSER_TABLE_COL_EMAIL, flex: 1 },
+    {
+      field: "serviceName",
+      headerName: l10n.MICROSERVICE_TABLE_COL_SERVICE_NAME,
+      width: 150,
+    },
+    {
+      field: "serviceUrl",
+      headerName: l10n.MICROSERVICE_TABLE_COL_SERVICE_URL,
+      flex: 1,
+    },
     {
       field: "action",
       headerName: l10n.COL_ACTIONS,
@@ -71,4 +79,4 @@ const AdminUserTable = ({ data, onSelect, onDelete }) => {
   );
 };
 
-export default AdminUserTable;
+export default MicroservicesTable;

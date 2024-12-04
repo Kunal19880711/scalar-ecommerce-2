@@ -1,11 +1,11 @@
 import constants from "lib-constants-system";
-import MicroService from "../../models/MicroServices.js";
-import HttpError from "lib-utils-webserver/HttpError.js";
+import Microservice from "models/Microservices";
+import HttpError from "lib-utils-webserver/HttpError";
 
 const { microserviceNames } = constants;
 const microserviceNameKeys = new Set(microserviceNames.map((ms) => ms.key));
 
-export const createMicroService = async (req, res, next) => {
+export const createMicroservice = async (req, res, next) => {
   const msData = req.body || {};
 
   try {
@@ -24,10 +24,10 @@ export const createMicroService = async (req, res, next) => {
       );
     }
     // Step 3: Check microservice doesn't exist
-    const existingMicroService = await MicroService.findOne({
+    const existingMicroservice = await Microservice.findOne({
       serviceName: msData.serviceName,
     });
-    if (existingMicroService) {
+    if (existingMicroservice) {
       throw new HttpError(
         400,
         `Microservice ${msData.serviceName} already exists.`
@@ -35,10 +35,10 @@ export const createMicroService = async (req, res, next) => {
     }
 
     // Step 4: save the new microservice
-    const newMicroService = new MicroService(msData);
-    const savedMicroService = await newMicroService.save();
+    const newMicroservice = new Microservice(msData);
+    const savedMicroservice = await newMicroservice.save();
     res.status(201).json({
-      data: savedMicroService,
+      data: savedMicroservice,
       message: "Microservice created successfully.",
       success: true,
     });
@@ -47,11 +47,11 @@ export const createMicroService = async (req, res, next) => {
   }
 };
 
-export const getAllMicroServices = async (req, res, next) => {
+export const getAllMicroservices = async (req, res, next) => {
   try {
-    const microServices = await MicroService.find();
+    const microservices = await Microservice.find();
     res.status(200).json({
-      data: microServices,
+      data: microservices,
       message: "Microservices fetched successfully.",
       success: true,
     });
@@ -60,7 +60,7 @@ export const getAllMicroServices = async (req, res, next) => {
   }
 };
 
-export const updateMicroService = async (req, res, next) => {
+export const updateMicroservice = async (req, res, next) => {
   const update = req.body;
   try {
     // Step 1: check microservice name is valid
@@ -72,7 +72,7 @@ export const updateMicroService = async (req, res, next) => {
     }
 
     // Step 2: Update the microservice
-    const microService = await MicroService.findByIdAndUpdate(
+    const microservice = await Microservice.findByIdAndUpdate(
       req.params.id,
       update,
       {
@@ -80,11 +80,11 @@ export const updateMicroService = async (req, res, next) => {
         runValidators: true,
       }
     );
-    if (!microService) {
+    if (!microservice) {
       return next(new HttpError("Microservice not found", 404));
     }
     res.status(200).json({
-      data: microService,
+      data: microservice,
       message: "Microservice updated successfully.",
       success: true,
     });
@@ -93,14 +93,14 @@ export const updateMicroService = async (req, res, next) => {
   }
 };
 
-export const deleteMicroService = async (req, res, next) => {
+export const deleteMicroservice = async (req, res, next) => {
   try {
-    const microService = await MicroService.findByIdAndDelete(req.params.id);
-    if (!microService) {
+    const microservice = await Microservice.findByIdAndDelete(req.params.id);
+    if (!microservice) {
       return next(new HttpError("Microservice not found", 404));
     }
     res.status(200).json({
-      data: microService,
+      data: microservice,
       message: "Microservice deleted successfully.",
       success: true,
     });

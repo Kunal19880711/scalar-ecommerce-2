@@ -1,8 +1,10 @@
 import { axiosInstance } from "./axiosSetup";
 
-export const getAllMicroServices = async () => {
+export const getAllMicroservices = async () => {
   try {
-    const response = await axiosInstance.get("/microservice/getAllMicroServices");
+    const response = await axiosInstance.get(
+      "/microservice/getAllMicroservices"
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -10,9 +12,12 @@ export const getAllMicroServices = async () => {
   }
 };
 
-export const createMicroService = async (payload) => {
+export const addMicroservice = async (payload) => {
   try {
-    const response = await axiosInstance.post("/microservice/createMicroService", payload);
+    const response = await axiosInstance.post(
+      "/microservice/createMicroService",
+      payload
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -20,9 +25,12 @@ export const createMicroService = async (payload) => {
   }
 };
 
-export const updateMicroService = async (id, payload) => {
+export const updateMicroservice = async (id, payload) => {
   try {
-    const response = await axiosInstance.patch(`/microservice/updateMicroService/${id}`, payload);
+    const response = await axiosInstance.patch(
+      `/microservice/updateMicroService/${id}`,
+      payload
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -30,9 +38,11 @@ export const updateMicroService = async (id, payload) => {
   }
 };
 
-export const deleteMicroService = async (id) => {
+export const deleteMicroservice = async (id) => {
   try {
-    const response = await axiosInstance.delete(`/microservice/deleteMicroService/${id}`);
+    const response = await axiosInstance.delete(
+      `/microservice/deleteMicroService/${id}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);

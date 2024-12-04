@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const microServiceEntityName = "MicroServices";
+export const microServiceEntityName = "Microservices";
 export const microServiceSchemaDef = {
   serviceName: {
     type: String,
@@ -15,8 +15,8 @@ export const microServiceSchema = new mongoose.Schema(microServiceSchemaDef, {
   timestamps: true,
 });
 
-const MicroServiceModel = mongoose.model(
+const MicroserviceModel = mongoose.model(
   microServiceEntityName,
   microServiceSchema
 );
-export default MicroServiceModel;
+export default MicroserviceModel;
