@@ -74,6 +74,13 @@ const strings = new LocalizedStrings({
     PROFILE_VALID_EMAIL_ERR_MSG: "Please enter a valid E-Mail",
     PROFILE_PASSWORD_LABEL: "Password",
     PROFILE_UPDATE_BTN_LABEL: "Update Profile",
+
+    TOASTER_CREATE_SUCCESS: "{ENTITY_NAME} created successfully.",
+    TOASTER_UPDATE_SUCCESS: "{ENTITY_NAME} updated successfully.",
+    TOASTER_DELETE_SUCCESS: "{ENTITY_NAME} deleted successfully.",
+    TOASTER_CREATE_FAIL: "Failed to create {ENTITY_NAME}.",
+    TOASTER_UPDATE_FAIL: "Failed to update {ENTITY_NAME}.",
+    TOASTER_DELETE_FAIL: "Failed to delete {ENTITY_NAME}.",
   },
 });
 

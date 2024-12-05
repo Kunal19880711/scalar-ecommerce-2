@@ -36,6 +36,7 @@ const AdminUsersView = ({
 
   return (
     <SimpleCurdView
+      entityName={l10n.ADMINUSER_ENTITY_NAME}
       tableCols={tableCols}
       data={data}
       fetchErrMsg={fetchErrMsg}

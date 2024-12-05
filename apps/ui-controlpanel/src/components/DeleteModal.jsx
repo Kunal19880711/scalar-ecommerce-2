@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -6,6 +7,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { setToaster } from "../redux/toasterSlice";
+import { entityChangeTypes, getToasterParams } from "../utils/utils";
 import l10n from "../constants/l10n";
 
 const DeleteModal = ({
@@ -19,12 +22,23 @@ const DeleteModal = ({
 }) => {
   const title = l10n.DELETE_MODAL_TITLE.replace("{ENTITY_NAME}", entityName);
   const msg = l10n.DELETE_MODAL_MSG.replace("{ENTITY_NAME}", entityName);
+  const dispatch = useDispatch();
 
   const onConfirm = async () => {
-    if (await onDelete(selectedRowForDelete)) {
+    const result = await onDelete(selectedRowForDelete);
+    if (result) {
       setSelectedRowForDelete(null);
       setOpen(false);
     }
+    dispatch(
+      setToaster(
+        getToasterParams({
+          entityName,
+          changeType: entityChangeTypes.DELETE,
+          success: result,
+        })
+      )
+    );
   };
 
   const onCancel = () => {

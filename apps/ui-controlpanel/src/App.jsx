@@ -8,11 +8,13 @@ import ResetPassword from "./pages/ResetPassword";
 import AdminUsers from "./pages/AdminUsers";
 import Microservices from "./pages/Microservices";
 import Profile from "./pages/Profile";
+import Toaster from "./components/Toaster";
 
 function App() {
   return (
     <>
       <UserSession />
+      <Toaster />
       <BrowserRouter
         future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
       >

@@ -44,6 +44,7 @@ const MicroservicesView = ({
 
   return (
     <SimpleCurdView
+    entityName={l10n.MICROSERVICE_ENTITY_NAME}
       tableCols={tableCols}
       data={data}
       fetchErrMsg={fetchErrMsg}
