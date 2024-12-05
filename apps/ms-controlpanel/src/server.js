@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
@@ -24,6 +25,7 @@ import microserviceRoute from "./routes/microserviceRoute.js";
 const port = 8000;
 const serviceName = "CONTROL_PANEL";
 const apiBasePath = "/e-commerce";
+const __dirname = import.meta.dirname;
 
 connectDb();
 
@@ -41,6 +43,10 @@ app.use(mongoSanitize());
 app.use(apiBasePath, apiLimiter);
 app.use(cacheControl({ apiBasePath }));
 app.use(cookieParser());
+app.use(
+  "/",
+  express.static(path.join(__dirname, "..", "..", "ui-controlpanel", "dist"))
+);
 
 app.use(`${apiBasePath}/user`, userRoute);
 app.use(

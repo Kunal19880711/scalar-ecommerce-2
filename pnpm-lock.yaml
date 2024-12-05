@@ -30,22 +30,22 @@ importers:
         specifier: ^9.0.2
         version: 9.0.2
       lib-config-app:
-        specifier: file:../../packages/lib-config-app
+        specifier: workspace:*
         version: link:../../packages/lib-config-app
       lib-config-db:
-        specifier: file:../../packages/lib-config-db
+        specifier: workspace:*
         version: link:../../packages/lib-config-db
       lib-constants-system:
-        specifier: file:../../packages/lib-constants-system
+        specifier: workspace:*
         version: link:../../packages/lib-constants-system
       lib-utils-email:
-        specifier: file:../../packages/lib-utils-email
+        specifier: workspace:*
         version: link:../../packages/lib-utils-email
       lib-utils-webserver:
-        specifier: file:../../packages/lib-utils-webserver
+        specifier: workspace:*
         version: link:../../packages/lib-utils-webserver
       models:
-        specifier: file:../../packages/models
+        specifier: workspace:*
         version: link:../../packages/models
       mongo:
         specifier: ^0.1.0
@@ -146,13 +146,13 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
       lib-config-app:
-        specifier: file:../../packages/lib-config-app
+        specifier: workspace:*
         version: link:../../packages/lib-config-app
       lib-config-db:
-        specifier: file:../../packages/lib-config-db
+        specifier: workspace:*
         version: link:../../packages/lib-config-db
       models:
-        specifier: file:../../packages/models
+        specifier: workspace:*
         version: link:../../packages/models
       mongo:
         specifier: ^0.1.0
@@ -200,10 +200,10 @@ importers:
         specifier: ^9.0.2
         version: 9.0.2
       lib-constants-system:
-        specifier: file:../lib-constants-system
+        specifier: workspace:*
         version: link:../lib-constants-system
       models:
-        specifier: file:../models
+        specifier: workspace:*
         version: link:../models
       mongo:
         specifier: ^0.1.0
@@ -215,7 +215,7 @@ importers:
   packages/models:
     dependencies:
       lib-constants-system:
-        specifier: file:../lib-constants-system
+        specifier: workspace:^
         version: link:../lib-constants-system
       mongo:
         specifier: ^0.1.0

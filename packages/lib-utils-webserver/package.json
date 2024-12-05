@@ -18,7 +18,7 @@
     "mongoose": "^8.8.2"
   },
   "dependencies": {
-    "models": "file:../models",
-    "lib-constants-system": "file:../lib-constants-system"
+    "lib-constants-system": "workspace:*",
+    "models": "workspace:*"
   }
 }

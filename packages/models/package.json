@@ -15,6 +15,6 @@
     "mongoose": "^8.8.2"
   },
   "dependencies": {
-    "lib-constants-system": "file:../lib-constants-system"
+    "lib-constants-system": "workspace:*"
   }
 }
