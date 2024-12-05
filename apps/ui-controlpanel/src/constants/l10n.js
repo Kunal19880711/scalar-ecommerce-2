@@ -65,6 +65,15 @@ const strings = new LocalizedStrings({
     DELETE_MODAL_MSG: "Are you sure you want to delete this {ENTITY_NAME}?",
     DELETE_MODAL_CANCEL_BTN_LABEL: "Cancel",
     DELETE_MODAL_DELETE_BTN_LABEL: "Delete",
+
+    PROFILE_TITLE: "Profile",
+    PROFILE_NAME_LABEL: "Name",
+    PROFILE_NAME_ERR_MSG: "Name is mandatory",
+    PROFILE_EMAIL_LABEL: "E-Mail",
+    PROFILE_EMAIL_ERR_MSG: "E-Mail is mandatory",
+    PROFILE_VALID_EMAIL_ERR_MSG: "Please enter a valid E-Mail",
+    PROFILE_PASSWORD_LABEL: "Password",
+    PROFILE_UPDATE_BTN_LABEL: "Update Profile",
   },
 });
 
