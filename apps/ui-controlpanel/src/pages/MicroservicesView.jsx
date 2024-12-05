@@ -1,11 +1,22 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import MicroserviceForm from "../components/MicroservicesForm";
-import MicroserviceTable from "../components/MicroservicesTable";
+import SimpleCurdView from "../components/SimpleCurdView";
+import l10n from "../constants/l10n";
+
+const tableCols = [
+  {
+    field: "serviceName",
+    headerName: l10n.MICROSERVICE_TABLE_COL_SERVICE_NAME,
+    width: 150,
+  },
+  {
+    field: "serviceUrl",
+    headerName: l10n.MICROSERVICE_TABLE_COL_SERVICE_URL,
+    flex: 1,
+  },
+];
 
 const MicroservicesView = ({
-  tooltipHeight,
   data,
   fetchErrMsg,
   selectedRow,
@@ -13,56 +24,37 @@ const MicroservicesView = ({
   onCreateOrUpdate,
   createUpdateErrMsg,
   onDelete,
+  deleteErrMsg,
 }) => {
-  const onCancelEdit = () => {
-    setSelectedRow(null);
-  };
-  const onCreateOrUpdateSubmit = async (data) => {
-    const result = await onCreateOrUpdate(data);
-    if (result) {
-      setSelectedRow(null);
-    }
-    return result;
-  };
+  const getFormElement = ({
+    selectedRow,
+    setSelectedRow,
+    onCreateOrUpdateSubmit,
+    onCancelEdit,
+    createUpdateErrMsg,
+  }) => (
+    <MicroserviceForm
+      selectedRow={selectedRow}
+      setSelectedRow={setSelectedRow}
+      onCreateOrUpdateSubmit={onCreateOrUpdateSubmit}
+      onCancelEdit={onCancelEdit}
+      createUpdateErrMsg={createUpdateErrMsg}
+    />
+  );
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        width: "100%",
-        height: `calc(100vh - ${tooltipHeight}px)`,
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{ flexBasis: 1, m: 2, p: 2, width: { xs: "90%", md: 810 } }}
-      >
-        <MicroserviceForm
-          selectedRow={selectedRow}
-          onCreateOrUpdateSubmit={onCreateOrUpdateSubmit}
-          onCancelEdit={onCancelEdit}
-          createUpdateErrMsg={createUpdateErrMsg}
-        />
-      </Paper>
-      <Paper
-        elevation={3}
-        sx={{
-          m: 2,
-          mt: 0,
-          p: 2,
-          width: { xs: "90%", md: 810 },
-        }}
-      >
-        <MicroserviceTable
-          data={data}
-          onSelect={setSelectedRow}
-          onDelete={onDelete}
-        />
-      </Paper>
-    </Box>
+    <SimpleCurdView
+      tableCols={tableCols}
+      data={data}
+      fetchErrMsg={fetchErrMsg}
+      getFormElement={getFormElement}
+      selectedRow={selectedRow}
+      setSelectedRow={setSelectedRow}
+      onCreateOrUpdate={onCreateOrUpdate}
+      createUpdateErrMsg={createUpdateErrMsg}
+      onDelete={onDelete}
+      deleteErrMsg={deleteErrMsg}
+    />
   );
 };
 

@@ -29,6 +29,8 @@ const strings = new LocalizedStrings({
     NAV_BAR_SETTING_LOGOUT: "Logout",
     NAV_BAR_TOOLTIP_OPEN_SETTINGS: "Open Settings",
 
+    ADMINUSER_ENTITY_NAME: "Admin User",
+
     ADMINUSER_FORM_TITLE_CREATE_ADMIN: "Create Admin User",
     ADMINUSER_FORM_TITLE_UPDATE_ADMIN: "Update Admin User",
     ADMINUSER_FORM_NAME_LABEL: "Name",
@@ -45,6 +47,8 @@ const strings = new LocalizedStrings({
     ADMINUSER_TABLE_COL_EMAIL: "E-Mail",
     COL_ACTIONS: "Actions",
 
+    MICROSERVICE_ENTITY_NAME: "Microservice",
+
     MICROSERVICE_FORM_TITLE_CREATE_MICROSERVICE: "Create Microservice",
     MICROSERVICE_FORM_TITLE_UPDATE_MICROSERVICE: "Update Microservice",
     MICROSERVICE_FORM_SERVICE_NAME_LABEL: "Service Name",
@@ -56,6 +60,11 @@ const strings = new LocalizedStrings({
 
     MICROSERVICE_TABLE_COL_SERVICE_NAME: "Service Name",
     MICROSERVICE_TABLE_COL_SERVICE_URL: "Service URL",
+
+    DELETE_MODAL_TITLE: "Delete {ENTITY_NAME}",
+    DELETE_MODAL_MSG: "Are you sure you want to delete this {ENTITY_NAME}?",
+    DELETE_MODAL_CANCEL_BTN_LABEL: "Cancel",
+    DELETE_MODAL_DELETE_BTN_LABEL: "Delete",
   },
 });
 

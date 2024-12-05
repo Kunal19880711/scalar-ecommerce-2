@@ -1,11 +1,14 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import AdminUserForm from "../components/AdminUserForm";
-import AdminUserTable from "../components/AdminUserTable";
+import SimpleCurdView from "../components/SimpleCurdView";
+import l10n from "../constants/l10n";
+
+const tableCols = [
+  { field: "name", headerName: l10n.ADMINUSER_TABLE_COL_NAME, width: 150 },
+  { field: "email", headerName: l10n.ADMINUSER_TABLE_COL_EMAIL, flex: 1 },
+];
 
 const AdminUsersView = ({
-  tooltipHeight,
   data,
   fetchErrMsg,
   selectedRow,
@@ -13,56 +16,37 @@ const AdminUsersView = ({
   onCreateOrUpdate,
   createUpdateErrMsg,
   onDelete,
+  deleteErrMsg,
 }) => {
-  const onCancelEdit = () => {
-    setSelectedRow(null);
-  };
-  const onCreateOrUpdateSubmit = async (data) => {
-    const result = await onCreateOrUpdate(data);
-    if (result) {
-      setSelectedRow(null);
-    }
-    return result;
-  };
+  const getFormElement = ({
+    selectedRow,
+    setSelectedRow,
+    onCreateOrUpdateSubmit,
+    onCancelEdit,
+    createUpdateErrMsg,
+  }) => (
+    <AdminUserForm
+      selectedRow={selectedRow}
+      setSelectedRow={setSelectedRow}
+      onCreateOrUpdateSubmit={onCreateOrUpdateSubmit}
+      onCancelEdit={onCancelEdit}
+      createUpdateErrMsg={createUpdateErrMsg}
+    />
+  );
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        width: "100%",
-        height: `calc(100vh - ${tooltipHeight}px)`,
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{ flexBasis: 1, m: 2, p: 2, width: { xs: "90%", md: 810 } }}
-      >
-        <AdminUserForm
-          selectedRow={selectedRow}
-          onCreateOrUpdateSubmit={onCreateOrUpdateSubmit}
-          onCancelEdit={onCancelEdit}
-          createUpdateErrMsg={createUpdateErrMsg}
-        />
-      </Paper>
-      <Paper
-        elevation={3}
-        sx={{
-          m: 2,
-          mt: 0,
-          p: 2,
-          width: { xs: "90%", md: 810 },
-        }}
-      >
-        <AdminUserTable
-          data={data}
-          onSelect={setSelectedRow}
-          onDelete={onDelete}
-        />
-      </Paper>
-    </Box>
+    <SimpleCurdView
+      tableCols={tableCols}
+      data={data}
+      fetchErrMsg={fetchErrMsg}
+      getFormElement={getFormElement}
+      selectedRow={selectedRow}
+      setSelectedRow={setSelectedRow}
+      onCreateOrUpdate={onCreateOrUpdate}
+      createUpdateErrMsg={createUpdateErrMsg}
+      onDelete={onDelete}
+      deleteErrMsg={deleteErrMsg}
+    />
   );
 };
 

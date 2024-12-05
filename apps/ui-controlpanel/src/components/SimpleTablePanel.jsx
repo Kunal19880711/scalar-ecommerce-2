@@ -6,13 +6,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import l10n from "../constants/l10n";
 
-const AdminUserTable = ({ data, onSelect, onDelete }) => {
+const SimpleTablePanel = ({ columnList, data, onSelect, onDeleteAction }) => {
   const tableParent = useRef(null);
   const [tableHeight, setTableHeight] = useState(500); // a ball park value
   const paginationModel = { page: 0, pageSize: 10 };
   const columns = [
-    { field: "name", headerName: l10n.ADMINUSER_TABLE_COL_NAME, width: 150 },
-    { field: "email", headerName: l10n.ADMINUSER_TABLE_COL_EMAIL, flex: 1 },
+    ...columnList,
     {
       field: "action",
       headerName: l10n.COL_ACTIONS,
@@ -29,7 +28,7 @@ const AdminUserTable = ({ data, onSelect, onDelete }) => {
           <IconButton
             color="error"
             onClick={() => {
-              onDelete(params.row);
+              onDeleteAction(params.row);
             }}
           >
             <DeleteIcon />
@@ -63,7 +62,15 @@ const AdminUserTable = ({ data, onSelect, onDelete }) => {
         getRowId={(row) => row._id}
         initialState={{ pagination: { paginationModel } }}
         pageSizeOptions={[5, 10, 20, 50]}
-        sx={{ border: 0 }}
+        sx={{
+          border: 0,
+          "& .MuiDataGrid-cell:focus": {
+            outline: "none", // Disable focus outline
+          },
+          "& .MuiDataGrid-cell:focus-within": {
+            outline: "none", // Disable focus outline when clicked
+          },
+        }}
         disableRowSelectionOnClick
         disableSelectionOnClick
       />
@@ -71,4 +78,4 @@ const AdminUserTable = ({ data, onSelect, onDelete }) => {
   );
 };
 
-export default AdminUserTable;
+export default SimpleTablePanel;
