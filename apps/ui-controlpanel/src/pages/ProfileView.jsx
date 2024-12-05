@@ -37,16 +37,21 @@ const ProfileView = ({ data, error, updateUser }) => {
   };
 
   useEffect(() => {
-    if (data) {
-      reset(data);
-    }
+    reset(data);
   }, [data]);
 
   return (
     data && (
       <Paper
         elevation={3}
-        sx={{ flexBasis: 1, m: 2, ml:"auto", mr:"auto", p: 2, width: { xs: "90%", md: 810 } }}
+        sx={{
+          flexBasis: 1,
+          m: 2,
+          ml: "auto",
+          mr: "auto",
+          p: 2,
+          width: { xs: "90%", md: 810 },
+        }}
       >
         <Box
           component="form"
