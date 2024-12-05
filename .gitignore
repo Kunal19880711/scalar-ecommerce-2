@@ -10,3 +10,7 @@ node_modules
 # config
 config.yaml
 .env
+
+
+.nx/cache
+.nx/workspace-data

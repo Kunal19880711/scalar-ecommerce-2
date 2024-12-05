@@ -61,3 +61,9 @@ _OR_
 ```sh
   pnpm run --parallel -r build
 ```
+
+## nx setip
+1. On Setup
+  - Run "pnpm exec nx run-many -t build" to run the build target for every project in the workspace. Run it again to replay the cached computation. https://nx.dev/features/cache-task-results
+  - Run "pnpm exec nx graph" to see the graph of projects and tasks in your workspace. https://nx.dev/core-features/explore-graph
+  - Learn more at https://nx.dev/getting-started/tutorials/npm-workspaces-tutorial.
