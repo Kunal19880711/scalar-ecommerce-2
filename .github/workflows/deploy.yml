@@ -15,10 +15,29 @@ jobs:
 
       - name: Set up Service Account Key
         run: |
-          echo "${{ secrets.GCLOUD_KEY_BASE64 }}" | base64 -d > $HOME/gcloud-key.json
+          echo "${{ secrets.GCLOUD_KEY_BASE64 }}" | base64 -di > $HOME/gcloud-key.json
+
+      - name: Save config.yaml
+        run: |
+          echo "${{ secrets.CONFIG_YAML }}" | base64 -di > config.yaml
 
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           service_account_key: $HOME/gcloud-key.json
           project_id: ${{ secrets.GCLOUD_PROJECT }}
+
+      - name: Build ms-cloudpanel
+        run: |
+          docker build --target ms-controlpanel -t sec2-ms-controlpanel .
+
+      - name: Deploy ms-cloudpanel
+        run: |
+          gcloud auth configure-docker
+          docker tag sec2-ms-controlpanel gcr.io/${{ secrets.GCLOUD_PROJECT }}/sec2-ms-controlpanel
+          docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/sec2-ms-controlpanel
+          gcloud run deploy sec2-ms-controlpanel \
+            --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/sec2-ms-controlpanel \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated`
