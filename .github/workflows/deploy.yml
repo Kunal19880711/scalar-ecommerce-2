@@ -25,7 +25,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           service_account_key: $HOME/gcloud-key.json
-          project_id: ${{ secrets.GCLOUD_PROJECT }}
+          project_id: scalar-e-commerce
 
       - name: Build ms-cloudpanel
         run: |
@@ -33,11 +33,12 @@ jobs:
 
       - name: Deploy ms-cloudpanel
         run: |
-          gcloud auth configure-docker
-          docker tag sec2-ms-controlpanel gcr.io/${{ secrets.GCLOUD_PROJECT }}/sec2-ms-controlpanel
-          docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/sec2-ms-controlpanel
+          gcloud auth configure-docker gcr.io
+          gcloud config set project scalar-e-commerce
+          docker tag sec2-ms-controlpanel gcr.io/scalar-e-commerce/sec2-ms-controlpanel
+          docker push gcr.io/scalar-e-commerce/sec2-ms-controlpanel
           gcloud run deploy sec2-ms-controlpanel \
-            --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/sec2-ms-controlpanel \
+            --image gcr.io/scalar-e-commerce/sec2-ms-controlpanel \
             --platform managed \
             --region us-central1 \
-            --allow-unauthenticated`
+            --allow-unauthenticated
