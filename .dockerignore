@@ -1,0 +1,11 @@
+.git
+node_modules
+**/node_modules
+**/dist
+.dockerignore
+.gitignore
+Dockerfile
+LICENSE
+README.md
+scalar-e-commerce-2.code-workspace
+.secrets

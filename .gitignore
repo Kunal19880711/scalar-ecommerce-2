@@ -11,6 +11,9 @@ node_modules
 config.yaml
 .env
 
-
+# nx
 .nx/cache
 .nx/workspace-data
+
+# act
+.secrets

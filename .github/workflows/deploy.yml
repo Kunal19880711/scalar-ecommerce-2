@@ -1,0 +1,24 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Service Account Key
+        run: |
+          echo "${{ secrets.GCLOUD_KEY_BASE64 }}" | base64 -d > $HOME/gcloud-key.json
+
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          service_account_key: $HOME/gcloud-key.json
+          project_id: ${{ secrets.GCLOUD_PROJECT }}
