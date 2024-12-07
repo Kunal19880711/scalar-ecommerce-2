@@ -33,7 +33,7 @@ jobs:
 
       - name: Deploy ms-cloudpanel
         run: |
-          gcloud auth configure-docker gcr.io
+          gcloud auth configure-docker --quiet
           gcloud config set project scalar-e-commerce
           docker tag sec2-ms-controlpanel gcr.io/scalar-e-commerce/sec2-ms-controlpanel
           docker push gcr.io/scalar-e-commerce/sec2-ms-controlpanel
