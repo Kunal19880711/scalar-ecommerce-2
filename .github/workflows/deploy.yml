@@ -28,7 +28,7 @@ jobs:
       
       - name: Build and Deloy ms-controlpanel
         run: |
-          docker exec my-dind-container sh -c "node workspace/cli/builder deploy --key-file /service-account.json ms-controlpanel"
+          docker exec my-dind-container sh -c "npm install -g commander && node workspace/cli/builder deploy --key-file /service-account.json ms-controlpanel"
 
       - name: Remove deployer
         run: |
