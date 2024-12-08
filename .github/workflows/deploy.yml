@@ -27,7 +27,7 @@ jobs:
 
       - name: Start deployer
         run: |
-          docker run --privileged --name my-dind-container -d -v ${PWD}:/workspace -v $HOME/gcloud-key.json:/service-account.json  sec2-deployer
+          docker run --privileged --shm-size=2g --name my-dind-container -d -v ${PWD}:/workspace -v /var/run/docker.sock:/var/run/docker.sock:ro -v $HOME/gcloud-key.json:/service-account.json  sec2-deployer
       
       - name: Build and Deloy ms-controlpanel
         run: |
