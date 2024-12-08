@@ -39,6 +39,7 @@ FROM docker:dind AS deployer
 
 ### Install Google Cloud SDK
 RUN apk add --no-cache --update nodejs-current npm python3 py3-pip tar && \
+    npm install -g commander && \
     # install google-cloud-sdk
     mkdir -p /opt/google-cloud-sdk && \
     wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz && \
