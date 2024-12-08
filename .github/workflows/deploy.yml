@@ -21,9 +21,12 @@ jobs:
         run: |
           echo "${{ secrets.CONFIG_YAML }}" | base64 -di > config.yaml
 
-      - name: Build and start deployer
+      - name: Build deployer
         run: |
           docker build --target deployer -t sec2-deployer .
+
+      - name: Start deployer
+        run: |
           docker run --privileged --name my-dind-container -d -v ${PWD}:/workspace -v $HOME/gcloud-key.json:/service-account.json  sec2-deployer
       
       - name: Build and Deloy ms-controlpanel
