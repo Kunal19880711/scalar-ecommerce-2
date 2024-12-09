@@ -37,6 +37,7 @@ async function runProgram() {
     .command("start <services>")
     .description("start services")
     .option("-p, --privileged", "run with privileged mode", false)
+    .option("-l, --local", "run in dev mode locally", false)
     .action(startServices);
 
   program
@@ -64,11 +65,14 @@ async function buildServices(services) {
 async function startServices(services, options) {
   const requestedServices = getServices(services);
   const privileged = options.privileged ? "--privileged" : "";
+  const localOption = options.local
+    ? ""
+    : `-e CONFIG_YAML=${fs.readFileSync("./config.yaml", "utf8")}`;
   for (const service of requestedServices) {
     const containerName = getContainerName(service);
     const imageName = getDockerImageName(service);
     await asyncRun(
-      `docker run ${privileged} -d --name ${containerName} ${imageName}`
+      `docker run ${privileged} -d --name ${containerName} ${localOption} ${imageName}`
     );
   }
 }
@@ -106,7 +110,6 @@ async function deployServices(services, options) {
       [
         `gcloud run deploy ${service}`,
         `--image ${gCloudImageName}`,
-        `--port ${port}`,
         "--platform managed",
         `--region ${region}`,
         "--allow-unauthenticated",
