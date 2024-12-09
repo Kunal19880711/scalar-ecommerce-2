@@ -46,7 +46,7 @@
 7. Mount the secret as an environment variable in your Cloud Run service.
 
 ```zsh
-    gcloud run services update ms-controlpanel --update-secrets CONFIG_YAML=CONFIG_YAML:latest
+    gcloud run services update sec2-ms-controlpanel --update-secrets CONFIG_YAML=CONFIG_YAML:latest
 ```
 
 8. Giving permission to service account to use Google Cloud Storage
@@ -60,4 +60,10 @@
 
 ```zsh
     gcloud projects get-iam-policy scalar-e-commerce --flatten="bindings[].members" --filter="bindings.members:serviceAccount:676869938642-compute@developer.gserviceaccount.com "  --format="table(bindings.role)"
+```
+
+10. Updates are available for some Google Cloud CLI components. To install them,
+
+```zsh
+    gcloud components update
 ```

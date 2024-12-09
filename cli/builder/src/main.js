@@ -48,7 +48,7 @@ async function runProgram() {
   program
     .command("deploy <services>")
     .description("deploy services")
-    .requiredOption("-f, --key-file <file>", "path of the gcloud key file")
+    .option("-f, --key-file <file>", "path of the gcloud key file")
     .action(deployServices);
 
   program.parse(process.argv);
@@ -87,29 +87,27 @@ async function stopServices(services) {
 
 async function deployServices(services, options) {
   const requestedServices = getServices(services);
-  const keyFile = options.keyFile;
-  const isKeyFileExists = await isFileExists(keyFile);
-  if (!isKeyFileExists) {
-    console.error(`Key file ${keyFile} does not exists`);
-    process.exit(1);
-  }
+  const isKeyFileProvided = options.keyFile && (await isFileExists(keyFile));
 
   await buildServices(services);
   for (const service of requestedServices) {
     const imageName = getDockerImageName(service);
     const gCloudImageName = `gcr.io/${projectName}/${imageName}`;
-    const port = allServicesInfo.get(service).port;
-    await asyncRun(
-      `gcloud auth activate-service-account --key-file ${keyFile}`
-    );
+    const gcloudServiceName = getGcloudServiceName(service);
+    if (isKeyFileProvided) {
+      await asyncRun(
+        `gcloud auth activate-service-account --key-file ${keyFile}`
+      );
+    }
     await asyncRun("gcloud auth configure-docker --quiet");
     await asyncRun(`gcloud config set project ${projectName} --quiet`);
     await asyncRun(`docker tag ${imageName} ${gCloudImageName}`);
     await asyncRun(`docker push ${gCloudImageName}`);
     await asyncRun(
       [
-        `gcloud run deploy ${service}`,
+        `gcloud run deploy ${gcloudServiceName}`,
         `--image ${gCloudImageName}`,
+        "--port 8080",
         "--platform managed",
         `--region ${region}`,
         "--allow-unauthenticated",
@@ -162,6 +160,10 @@ function getContainerName(service) {
 }
 
 function getDockerImageName(service) {
+  return `sec2-${service}`;
+}
+
+function getGcloudServiceName(service) {
   return `sec2-${service}`;
 }
 
