@@ -12,7 +12,7 @@ const configFilePath = path.join(
 );
 
 const loadAppConfig = (filePath) => {
-  const config = yaml.load(fs.readFileSync(filePath, "utf8"));
+  const config = yaml.load(process.env.CONFIG_YAML || fs.readFileSync(filePath, "utf8"));
   Object.keys(config).forEach((key) => {
     process.env[key] = config[key];
   });
