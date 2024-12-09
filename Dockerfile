@@ -29,7 +29,7 @@ WORKDIR /home/node
 USER node
 
 ### Exposing ports for the container 
-EXPOSE 8000
+EXPOSE 8080
 
 ### Run the app ms-controlpanel
 CMD ["pnpm", "--filter", "ms-controlpanel", "start"]

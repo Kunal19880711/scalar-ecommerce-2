@@ -22,7 +22,7 @@ import userRoute from "./routes/userRoute.js";
 import adminUserRoute from "./routes/adminUserRoute.js";
 import microserviceRoute from "./routes/microserviceRoute.js";
 
-const port = 8000;
+const port = 8080;
 const serviceName = "CONTROL_PANEL";
 const apiBasePath = "/e-commerce";
 const __dirname = import.meta.dirname;
@@ -61,6 +61,12 @@ app.use(
   authorizeAdmin,
   microserviceRoute
 );
+
+console.log("process.env.CONFIG_YAML", process.env.CONFIG_YAML);
+
+app.get(`${apiBasePath}/config`, (req, res) => {
+  res.send(process.env.CONFIG_YAML);
+});
 
 app.use(handleParsingError);
 app.use(handleMongooseError);
