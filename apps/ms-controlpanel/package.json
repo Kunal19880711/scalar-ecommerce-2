@@ -1,7 +1,7 @@
 {
   "name": "ms-controlpanel",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "type": "module",
   "keywords": [],
   "author": "",
