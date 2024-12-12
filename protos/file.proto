@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+import "error.proto";
+
+package file;
+
+
+
+// The file upload service definition
+service FileService {
+  rpc UploadFile (stream FileChunk) returns (FileInfoResponse);
+  rpc ReadFileInfo(FileInfoId) returns (FileInfoResponse);
+}
+
+// A chunk of the file being uploaded
+message FileChunk {
+  bytes data = 1;
+}
+
+// Response after file upload
+message FileInfo {
+  string id = 1;
+  string url = 2;
+  string mime = 3;
+  string ext = 4;
+  uint64 createdAtTimestamp = 5;
+  uint64 updatedAtTimestamp = 6;
+}
+
+message FileInfoId {
+  string id = 1;
+}
+
+message FileInfoResponse {
+  bool success = 1;
+  string message = 2;
+  error.Error error = 3;
+  FileInfo data = 4;
+}

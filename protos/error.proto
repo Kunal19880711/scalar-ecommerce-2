@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package error;
+
+message ErrorStatus {
+  uint32 code = 1;
+  string type = 2;
+  string detail = 3; 
+}
+
+message Error {
+  ErrorStatus status = 1;
+  string message = 2;
+}

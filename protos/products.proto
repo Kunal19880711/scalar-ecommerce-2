@@ -3,7 +3,6 @@ syntax = "proto3";
 package products;
 
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
 message Product {
   string id = 1;
