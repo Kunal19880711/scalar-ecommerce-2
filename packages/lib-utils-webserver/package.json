@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "lib-constants-system": "workspace:*",
-    "models": "workspace:*"
+    "models": "workspace:*",
+    "lib-error": "workspace:*"
   }
 }

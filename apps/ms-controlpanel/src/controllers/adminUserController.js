@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "models/UserSchema";
-import HttpError from "lib-utils-webserver/HttpError";
+import HttpError from "lib-error/HttpError";
+import errorStatus from "lib-error/errorStatus";
 import constants from "lib-constants-system";
 
 export const addAdmin = async (req, res, next) => {
@@ -8,7 +9,7 @@ export const addAdmin = async (req, res, next) => {
     const userExists = await User.findOne({ email: req?.body?.email });
 
     if (userExists) {
-      throw new HttpError(409, "User already exists");
+      throw new HttpError(errorStatus.CONFLICT, "User already exists");
     }
 
     const userData = req.body || {};
@@ -55,7 +56,7 @@ export const updateAdmin = async (req, res, next) => {
       runValidators: true,
     });
     if (!userToUpdate) {
-      throw new HttpError(404, "User not found.");
+      throw new HttpError(errorStatus.NOT_FOUND, "User not found.");
     }
     res.status(200).json({
       message: "User updated successfully.",
@@ -72,7 +73,7 @@ export const deleteAdmin = async (req, res, next) => {
     const { id } = req.params;
     const userToDelete = await User.findByIdAndDelete(id);
     if (!userToDelete) {
-      throw new HttpError(404, "User not found.");
+      throw new HttpError(errorStatus.NOT_FOUND, "User not found.");
     }
     res.status(200).json({
       message: "User deleted successfully.",

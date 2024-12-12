@@ -44,6 +44,9 @@ importers:
       lib-constants-system:
         specifier: workspace:*
         version: link:../../packages/lib-constants-system
+      lib-error:
+        specifier: workspace:*
+        version: link:../../packages/lib-error
       lib-utils-email:
         specifier: workspace:*
         version: link:../../packages/lib-utils-email
@@ -262,6 +265,9 @@ importers:
       lib-constants-system:
         specifier: workspace:*
         version: link:../lib-constants-system
+      lib-error:
+        specifier: workspace:*
+        version: link:../lib-error
       models:
         specifier: workspace:*
         version: link:../models

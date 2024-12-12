@@ -1,6 +1,7 @@
 import constants from "lib-constants-system";
 import Microservice from "models/Microservices";
-import HttpError from "lib-utils-webserver/HttpError";
+import HttpError from "lib-error/HttpError";
+import errorStatus from "lib-error/errorStatus";
 
 const { microserviceNames } = constants;
 const microserviceNameKeys = new Set(microserviceNames.map((ms) => ms.key));
@@ -12,14 +13,14 @@ export const createMicroservice = async (req, res, next) => {
     // Step 1. check microservice name and microservice url are present
     if (!msData.serviceName || !msData.serviceUrl) {
       throw new HttpError(
-        400,
+        errorStatus.BAD_REQUEST,
         "Invalid request: serviceName and serviceUrl are required."
       );
     }
     // Step 2: check microservice name is valid
     if (!microserviceNameKeys.has(msData.serviceName)) {
       throw new HttpError(
-        400,
+        errorStatus.BAD_REQUEST,
         `Invalid microservice name: ${msData.serviceName}.`
       );
     }
@@ -29,7 +30,7 @@ export const createMicroservice = async (req, res, next) => {
     });
     if (existingMicroservice) {
       throw new HttpError(
-        400,
+        errorStatus.BAD_REQUEST,
         `Microservice ${msData.serviceName} already exists.`
       );
     }
@@ -66,7 +67,7 @@ export const updateMicroservice = async (req, res, next) => {
     // Step 1: check microservice name is valid
     if (!microserviceNameKeys.has(msData.serviceName)) {
       throw new HttpError(
-        400,
+        errorStatus.BAD_REQUEST,
         `Invalid microservice name: ${msData.serviceName}.`
       );
     }
@@ -81,7 +82,7 @@ export const updateMicroservice = async (req, res, next) => {
       }
     );
     if (!microservice) {
-      return next(new HttpError("Microservice not found", 404));
+      return next(new HttpError(errorStatus.NOT_FOUND, "Microservice not found"));
     }
     res.status(200).json({
       data: microservice,
@@ -97,7 +98,7 @@ export const deleteMicroservice = async (req, res, next) => {
   try {
     const microservice = await Microservice.findByIdAndDelete(req.params.id);
     if (!microservice) {
-      return next(new HttpError("Microservice not found", 404));
+      return next(new HttpError(errorStatus.NOT_FOUND,"Microservice not found"));
     }
     res.status(200).json({
       data: microservice,

@@ -1,7 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "models/UserSchema";
-import HttpError from "lib-utils-webserver/HttpError";
+import HttpError from "lib-error/HttpError";
+import errorStatus from "lib-error/errorStatus";
 import { emailHelper, EMailTemplates } from "lib-utils-email";
 
 export const loginUser = async (req, res, next) => {
@@ -11,7 +12,7 @@ export const loginUser = async (req, res, next) => {
     );
 
     if (!userExists) {
-      throw new HttpError(400, "User doesn't exists. Please register.");
+      throw new HttpError(errorStatus.BAD_REQUEST, "User doesn't exists. Please register.");
     }
 
     const validatePassword = await bcrypt.compare(
@@ -19,7 +20,7 @@ export const loginUser = async (req, res, next) => {
       userExists.password
     );
     if (!validatePassword) {
-      throw new HttpError(400, "Please enter valid password.");
+      throw new HttpError(errorStatus.BAD_REQUEST, "Please enter valid password.");
     }
     const token = jwt.sign({ userId: userExists._id }, process.env.SECRET_KEY, {
       expiresIn: "1d",
@@ -57,7 +58,7 @@ export const viewCurrentUser = async (req, res, next) => {
   try {
     const user = await User.findById(req?.body?.user?.userId);
     if (!user) {
-      throw new HttpError(404, "You account have been deleted.");
+      throw new HttpError(errorStatus.NOT_FOUND, "You account have been deleted.");
     }
     res.status(200).json({
       data: user,
@@ -87,7 +88,7 @@ export const updateCurrentUser = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(userId, updates, { new: true });
 
     if (!user) {
-      throw new HttpError(404, "You account have been deleted.");
+      throw new HttpError(errorStatus.NOT_FOUND, "You account have been deleted.");
     }
 
     res.status(200).json({
@@ -104,12 +105,12 @@ export const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email) {
-      throw new HttpError(400, "Please enter E-Mail for forgot password");
+      throw new HttpError(errorStatus.BAD_REQUEST, "Please enter E-Mail for forgot password");
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      throw new HttpError(404, "User not found.");
+      throw new HttpError(errorStatus.NOT_FOUND, "User not found.");
     }
     const otp = generateOtp(6);
     await User.findByIdAndUpdate(user._id, {
@@ -135,22 +136,22 @@ export const resetPassword = async (req, res, next) => {
   try {
     const { email, otp, password } = req.body;
     if (!email || !otp || !password) {
-      throw new HttpError(400, "All fields are required.");
+      throw new HttpError(errorStatus.BAD_REQUEST, "All fields are required.");
     }
     const user = await User.findOne({
       email,
       otp,
     }).select("+otp +otpExpiry");
     if (!user) {
-      throw new HttpError(400, "Invalid OTP.");
+      throw new HttpError(errorStatus.BAD_REQUEST, "Invalid OTP.");
     }
 
     if (user.otpExpiry < Date.now()) {
-      throw new HttpError(400, "Expired OTP. Regenerate new Otp.");
+      throw new HttpError(errorStatus.BAD_REQUEST, "Expired OTP. Regenerate new Otp.");
     }
 
     if (user.otp !== otp) {
-      throw new HttpError(400, "Invalid OTP.");
+      throw new HttpError(errorStatus.BAD_REQUEST, "Invalid OTP.");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

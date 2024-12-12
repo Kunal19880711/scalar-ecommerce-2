@@ -20,6 +20,7 @@
     "lib-constants-system": "workspace:*",
     "lib-utils-email": "workspace:*",
     "lib-utils-webserver": "workspace:*",
+    "lib-error": "workspace:*",
     "models": "workspace:*",
     "mongo": "^0.1.0",
     "mongoose": "^8.8.2"
