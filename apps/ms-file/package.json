@@ -1,0 +1,30 @@
+{
+  "name": "ms-file",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon .",
+    "dev": "nodemon ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.14.0",
+    "@grpc/grpc-js": "^1.12.4",
+    "@grpc/proto-loader": "^0.7.13",
+    "file-type": "^19.6.0",
+    "lib-config-app": "workspace:*",
+    "lib-config-db": "workspace:*",
+    "lib-mongo-grpc": "workspace:*",
+    "models": "workspace:*",
+    "lib-constants-system": "workspace:*",
+    "lib-error": "workspace:*",
+    "uuid": "^11.0.3"
+  }
+}
