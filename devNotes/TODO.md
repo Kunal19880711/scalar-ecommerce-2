@@ -18,3 +18,7 @@
    5. Password recovery
 3. File Upload + link MS
 4. MUI responsive UI breakpoints
+
+## For later
+
+1. lib-utils-email/package.json

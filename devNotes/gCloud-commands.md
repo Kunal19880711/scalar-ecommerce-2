@@ -67,3 +67,33 @@
 ```zsh
     gcloud components update
 ```
+
+# User credentials
+
+Reference: [Set up a local development environment](https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment)
+
+# Configure ADC with your Google Account
+
+1. Install the Google Cloud CLI, then initialize it by running the following command:
+
+```zsh
+    gcloud init
+```
+
+2. If you're using a local shell, then create local authentication credentials for your user account:
+
+```zsh
+    gcloud auth application-default login
+```
+
+You don't need to do this if you're using Cloud Shell.
+
+```
+Note: To add scopes for services outside of Google Cloud, such as Google Drive, create an OAuth Client ID and provide it to the gcloud auth application-default login command by using the --client-id-file flag, specifying your scopes with the --scopes flag.
+```
+
+A sign-in screen appears. After you sign in, your credentials are stored in the local credential file used by ADC.
+
+## Set up Application Default Credentials 
+[Reference](https://cloud.google.com/docs/authentication/provide-credentials-adc)
+
