@@ -1,0 +1,15 @@
+{
+  "name": "lib-mongo-grpc",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "exports": {
+    "./*": "./lib/*.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "@grpc/grpc-js": "^1.12.4"
+  }
+}
