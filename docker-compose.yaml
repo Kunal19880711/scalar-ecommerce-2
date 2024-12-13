@@ -1,0 +1,45 @@
+services:
+  ms-controlpanel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: sec-all
+    image: sec-all:latest
+    container_name: ms-controlpanel
+    environment:
+      - CONFIG_YAML=${CONFIG_YAML}
+    command: ["pnpm", "--filter", "ms-controlpanel", "start"]
+    restart: unless-stopped
+    ports:
+      - "8091:8080"
+    networks:
+      - app-network
+
+  ms-file:
+    image: sec-all:latest
+    container_name: ms-file
+    environment:
+      - CONFIG_YAML=${CONFIG_YAML}
+    command: ["pnpm", "--filter", "ms-file", "start"]
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    networks:
+      - app-network
+
+  # webserver:
+  #   build:
+  #     context: ./nginx-certbot
+  #     dockerfile: Dockerfile
+  #   image: nginx-certbot
+  #   container_name: webserver
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - whisperhub
+  #     - scalarchatterbox
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,7 +1,7 @@
 # Dockerfile
 
-## core
-FROM node:22.12.0-alpine AS core
+## sec-all
+FROM node:22.12.0-alpine AS sec-all
 
 ## Global dependencies
 RUN npm install -g pnpm
@@ -19,20 +19,8 @@ USER node
 ### Build
 RUN pnpm install --frozen-lockfile && pnpm exec nx run-many -t build
 
-## ms-controlpanel
-FROM core AS ms-controlpanel
-
-### Set work directory
-WORKDIR /home/node
-
-### Set user node
-USER node
-
 ### Exposing ports for the container 
 EXPOSE 8080
-
-### Run the app ms-controlpanel
-CMD ["pnpm", "--filter", "ms-controlpanel", "start"]
 
 ## deployer
 FROM docker:dind AS deployer

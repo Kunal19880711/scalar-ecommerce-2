@@ -6,8 +6,9 @@ const dirname = import.meta.dirname;
 const ALL = "all";
 const projectName = "scalar-e-commerce";
 const region = "us-central1";
-const allServices = new Set(["ms-controlpanel"]);
-const allServicesInfo = new Map([["ms-controlpanel", { port: 8000 }]]);
+
+const DOCKER_TARGET = "sec-all";
+const DOCKER_IMG_NAME = "sec-all";
 
 main();
 
@@ -29,67 +30,51 @@ async function runProgram() {
   const { program } = await import("commander");
 
   program
-    .command("build <services>")
-    .description("build docker images for services")
-    .action(buildServices);
+    .command("build")
+    .description(`build docker image: [${DOCKER_IMG_NAME}]`)
+    .action(buildDockerImage);
 
   program
-    .command("start <services>")
-    .description("start services")
-    .option("-p, --privileged", "run with privileged mode", false)
-    .option("-l, --local", "run in dev mode locally", false)
-    .action(startServices);
+    .command("start")
+    .description("start docker compose")
+    .action(startDockerCompose);
 
   program
-    .command("stop <services>")
-    .description("stop services")
-    .action(stopServices);
+    .command("stop")
+    .description("stop docker compose")
+    .action(stopDockerCompose);
 
   program
-    .command("deploy <services>")
-    .description("deploy services")
+    .command("deploy")
+    .description("deploy services to gcloud")
     .option("-f, --key-file <file>", "path of the gcloud key file")
     .action(deployServices);
 
   program.parse(process.argv);
 }
 
-async function buildServices(services) {
-  const requestedServices = getServices(services);
-  for (const service of requestedServices) {
-    const imageName = getDockerImageName(service);
-    await asyncRun(`docker build --target ${service} -t ${imageName} .`);
-  }
+async function buildDockerImage(services) {
+  await asyncRun(
+    `docker build --target ${DOCKER_IMG_NAME} -t ${DOCKER_TARGET} .`
+  );
 }
 
-async function startServices(services, options) {
-  const requestedServices = getServices(services);
-  const privileged = options.privileged ? "--privileged" : "";
-  const localOption = options.local
-    ? ""
-    : `-e CONFIG_YAML=${fs.readFileSync("./config.yaml", "utf8")}`;
-  for (const service of requestedServices) {
-    const containerName = getContainerName(service);
-    const imageName = getDockerImageName(service);
-    await asyncRun(
-      `docker run ${privileged} -d --name ${containerName} ${localOption} ${imageName}`
-    );
-  }
+async function startDockerCompose(services, options) {
+  const envVars = {
+    CONFIG_YAML: fs.readFileSync("./config.yaml", "utf8"),
+  };
+  await asyncRun("docker compose up -d", { envVars });
 }
 
-async function stopServices(services) {
-  const requestedServices = getServices(services);
-  for (const service of requestedServices) {
-    const containerName = getContainerName(service);
-    await asyncRun(`docker rm -f ${containerName}`);
-  }
+async function stopDockerCompose(services) {
+  await asyncRun("docker compose down");
 }
 
 async function deployServices(services, options) {
   const requestedServices = getServices(services);
   const isKeyFileProvided = options.keyFile && (await isFileExists(keyFile));
 
-  await buildServices(services);
+  await buildDockerImage(services);
   for (const service of requestedServices) {
     const imageName = getDockerImageName(service);
     const gCloudImageName = `gcr.io/${projectName}/${imageName}`;
@@ -116,29 +101,14 @@ async function deployServices(services, options) {
   }
 }
 
-function getServices(services) {
-  const allServicesArr = [...allServices];
-  if (services === ALL) {
-    return allServicesArr;
-  }
-  const requestedServices = (services.split(" ") || [])
-    .filter((s) => !!s)
-    .map((s) => s.trim().toLowerCase());
-  const invalidServices = requestedServices.filter((s) => !allServices.has(s));
-
-  if (invalidServices.length > 0) {
-    const errStr = `Invalid services: ${invalidServices}. Valid services: ${allServicesArr}`;
-    console.error(errStr);
-    process.exit(1);
-  }
-  return requestedServices;
-}
-
-async function asyncRun(cmd, print = true) {
+async function asyncRun(cmd, options = {}) {
+  const { print = true, envVars = {} } = options;
   console.log(`Running command: ${cmd}`);
   return new Promise((resolve, reject) => {
     const [program, ...args] = cmd.split(" ").filter(Boolean);
-    const subprocess = spawn(program, args);
+    const subprocess = spawn(program, args, {
+      env: { ...process.env, ...envVars },
+    });
 
     if (print) {
       subprocess.stdout.on("data", (data) => console.log(data.toString()));
@@ -156,10 +126,6 @@ async function asyncRun(cmd, print = true) {
 }
 
 function getContainerName(service) {
-  return `sec2-${service}`;
-}
-
-function getDockerImageName(service) {
   return `sec2-${service}`;
 }
 
