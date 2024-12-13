@@ -11,5 +11,8 @@
   "license": "ISC",
   "peerDependencies": {
     "lib-error": "workspace:*"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.12.4"
   }
 }
