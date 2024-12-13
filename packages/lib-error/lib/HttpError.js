@@ -1,4 +1,4 @@
-import errorStatus from "./errorStatus";
+import errorStatus from "./errorStatus.js";
 
 class HttpError extends Error {
   constructor(status = errorStatus.INTERNAL_SERVER_ERROR, message, data) {

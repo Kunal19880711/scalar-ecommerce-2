@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import HttpError from "lib-error/HttpError";
 import errorStatus from "lib-error/errorStatus";
-import httpStatusMessage from "../httpStatusMessage.js";
 
 export function handleParsingError(err, req, res, next) {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
@@ -45,10 +44,13 @@ export function handleError(err, req, res, next) {
       data: err.data,
     });
   }
-  console.error(httpStatusMessage[500], err);
-  res.status(500).json({
+
+  // throwing internal server error
+  const internalErrStatus = errorStatus.INTERNAL_SERVER_ERROR;
+  console.error(internalErrStatus, err);
+  res.status(internalErrStatus.code).json({
     success: false,
-    status: errorStatus.INTERNAL_SERVER_ERROR,
-    message: httpStatusMessage[500],
+    status: internalErrStatus,
+    message: internalErrStatus.detail,
   });
 }
