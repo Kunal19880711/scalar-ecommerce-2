@@ -5,7 +5,7 @@ import protoLoader from "@grpc/proto-loader";
 import "lib-config-app";
 import connectDb from "lib-config-db";
 import File from "models/File";
-import SimpleMongoGrpcServiceBuilder from "lib-mongo-grpc/SimpleMongoGrpcServiceBuilder";
+import SimpleMongoGrpcServiceBuilder from "lib-utils-grpc/SimpleMongoGrpcServiceBuilder";
 import { uploadFile } from "./uploadFile.js";
 
 const dirname = import.meta.dirname;

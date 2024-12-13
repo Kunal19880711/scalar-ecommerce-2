@@ -22,7 +22,7 @@
     "lib-config-app": "workspace:*",
     "lib-config-db": "workspace:*",
     "lib-error": "workspace:*",
-    "lib-mongo-grpc": "workspace:*",
+    "lib-utils-grpc": "workspace:*",
     "models": "workspace:*",
     "uuid": "^11.0.3"
   }
