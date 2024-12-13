@@ -1,4 +1,4 @@
-import errorStatus from "./errorStatus";
+import errorStatus from "./errorStatus.js";
 
 class GrpcError extends Error {
   constructor(message, status) {
