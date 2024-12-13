@@ -87,9 +87,6 @@ importers:
       lib-config-db:
         specifier: workspace:*
         version: link:../../packages/lib-config-db
-      lib-constants-system:
-        specifier: workspace:*
-        version: link:../../packages/lib-constants-system
       lib-error:
         specifier: workspace:*
         version: link:../../packages/lib-error
@@ -244,9 +241,9 @@ importers:
 
   packages/lib-mongo-grpc:
     dependencies:
-      '@grpc/grpc-js':
-        specifier: ^1.12.4
-        version: 1.12.4
+      lib-error:
+        specifier: workspace:*
+        version: link:../lib-error
 
   packages/lib-utils-email:
     dependencies:

@@ -21,10 +21,9 @@
     "file-type": "^19.6.0",
     "lib-config-app": "workspace:*",
     "lib-config-db": "workspace:*",
+    "lib-error": "workspace:*",
     "lib-mongo-grpc": "workspace:*",
     "models": "workspace:*",
-    "lib-constants-system": "workspace:*",
-    "lib-error": "workspace:*",
     "uuid": "^11.0.3"
   }
 }

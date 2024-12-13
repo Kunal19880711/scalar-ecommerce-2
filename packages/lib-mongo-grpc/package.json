@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "@grpc/grpc-js": "^1.12.4"
+    "lib-error": "workspace:*"
   }
 }

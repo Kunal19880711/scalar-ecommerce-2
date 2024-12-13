@@ -1,4 +1,5 @@
-import grpc from "@grpc/grpc-js";
+import GrpcError, { sendError } from "lib-error/GrpcError";
+import errorStatus from "lib-error/errorStatus";
 
 export default class SimpleMongoGrpcServiceBuilder {
   constructor(options) {
@@ -10,13 +11,16 @@ export default class SimpleMongoGrpcServiceBuilder {
     return async (call, callback) => {
       try {
         const entities = await this.model.find();
-        const data = entities.map((entity) => entity.toObject({virtuals: true}));
-        callback(null, {data});
-      } catch (err) {
-        callback({
-          status: grpc.status.INTERNAL,
-          message: err.message,
+        const data = entities.map((entity) =>
+          entity.toObject({ virtuals: true })
+        );
+        callback(null, {
+          success: true,
+          message: `${entityName}(s/es) fetched successfully`,
+          data,
         });
+      } catch (err) {
+        this.sendInternalServerError(callback, err);
       }
     };
   }
@@ -26,18 +30,17 @@ export default class SimpleMongoGrpcServiceBuilder {
       try {
         const entity = await this.model.findById(call.request.id);
         if (!entity) {
-          callback({
-            status: grpc.status.NOT_FOUND,
-            message: `${entityName} not found`,
-          });
+          this.sendEntityNotFound(callback);
         } else {
-          callback(null, entity.toObject({virtuals: true}));
+          const savedObject = entity.toObject({ virtuals: true });
+          callback(null, {
+            success: true,
+            message: `${this.entityName} found`,
+            data: savedObject,
+          });
         }
       } catch (err) {
-        callback({
-          status: grpc.status.INTERNAL,
-          message: err.message,
-        });
+        this.sendInternalServerError(callback, err);
       }
     };
   }
@@ -47,13 +50,10 @@ export default class SimpleMongoGrpcServiceBuilder {
       try {
         const entity = await this.model.create(call.request);
         const savedEntity = await entity.save();
-        const savedObject = savedEntity.toObject({virtuals: true});
+        const savedObject = savedEntity.toObject({ virtuals: true });
         callback(null, savedObject);
       } catch (err) {
-        callback({
-          status: grpc.status.INTERNAL,
-          message: err.message,
-        });
+        this.sendInternalServerError(callback, err);
       }
     };
   }
@@ -70,19 +70,17 @@ export default class SimpleMongoGrpcServiceBuilder {
           }
         );
         if (!entity) {
-          callback({
-            status: grpc.status.NOT_FOUND,
-            message: `${entityName} not found`,
-          });
+          this.sendEntityNotFound(callback);
         } else {
-          const updatedObject = entity.toObject({virtuals: true});
-          callback(null, updatedObject);
+          const updatedObject = entity.toObject({ virtuals: true });
+          callback(null, {
+            success: true,
+            message: `${this.entityName} updated successfully`,
+            data: updatedObject,
+          });
         }
       } catch (err) {
-        callback({
-          status: grpc.status.INTERNAL,
-          message: err.message,
-        });
+        this.sendInternalServerError(callback, err);
       }
     };
   }
@@ -92,20 +90,32 @@ export default class SimpleMongoGrpcServiceBuilder {
       try {
         const entity = await this.model.findByIdAndDelete(call.request.id);
         if (!entity) {
-          callback({
-            status: grpc.status.NOT_FOUND,
-            message: `${entityName} not found`,
-          });
+          this.sendEntityNotFound(callback);
         } else {
-          const deletedObject = entity.toObject({virtuals: true});
-          callback(null, deletedObject);
+          const deletedObject = entity.toObject({ virtuals: true });
+          callback(null, {
+            success: true,
+            message: `${this.entityName} deleted successfully`,
+            data: deletedObject,
+          });
         }
       } catch (err) {
-        callback({
-          status: grpc.status.INTERNAL,
-          message: err.message,
-        });
+        this.sendInternalServerError(callback, err);
       }
     };
+  }
+
+  sendEntityNotFound(callback) {
+    sendError(
+      callback,
+      new GrpcError(errorStatus.NOT_FOUND, `${this.entityName} not found`)
+    );
+  }
+  
+   sendInternalServerError(callback, err) {
+    sendError(
+      callback,
+      new GrpcError(err.message, errorStatus.INTERNAL_SERVER_ERROR)
+    );
   }
 }
