@@ -8,7 +8,7 @@ const projectName = "scalar-e-commerce";
 const region = "us-central1";
 
 const DOCKER_TARGET = "sec-all";
-const DOCKER_IMG_NAME = "sec-all";
+const DOCKER_IMG_NAME = "sec-all:latest";
 
 main();
 
@@ -55,7 +55,7 @@ async function runProgram() {
 
 async function buildDockerImage(services) {
   await asyncRun(
-    `docker build --target ${DOCKER_IMG_NAME} -t ${DOCKER_TARGET} .`
+    `docker build --target ${DOCKER_TARGET} -t ${DOCKER_IMG_NAME} .`
   );
 }
 
@@ -107,7 +107,7 @@ async function asyncRun(cmd, options = {}) {
   return new Promise((resolve, reject) => {
     const [program, ...args] = cmd.split(" ").filter(Boolean);
     const subprocess = spawn(program, args, {
-      env: { ...process.env, ...envVars },
+      env: envVars,
     });
 
     if (print) {
