@@ -27,6 +27,7 @@ const fileService = createGrpcServer([
     impl: {
       uploadFile: uploadFile,
       readFileInfo: simpleServiceProvider.createGet(),
+      readAllFileInfos: simpleServiceProvider.createGetAll(),
     },
   },
 ]);

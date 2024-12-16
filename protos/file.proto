@@ -1,15 +1,14 @@
 syntax = "proto3";
 
-import "error.proto";
+import "common.proto";
 
 package file;
-
-
 
 // The file upload service definition
 service FileService {
   rpc UploadFile (stream FileChunk) returns (FileInfoResponse);
   rpc ReadFileInfo(FileInfoId) returns (FileInfoResponse);
+  rpc ReadAllFileInfos(common.Empty) returns (AllFileInfoResponse);
 }
 
 // A chunk of the file being uploaded
@@ -34,6 +33,13 @@ message FileInfoId {
 message FileInfoResponse {
   bool success = 1;
   string message = 2;
-  error.Error error = 3;
+  common.Error error = 3;
   FileInfo data = 4;
+}
+
+message AllFileInfoResponse {
+  bool success = 1;
+  string message = 2;
+  common.Error error = 3;
+  repeated FileInfo data = 4;
 }

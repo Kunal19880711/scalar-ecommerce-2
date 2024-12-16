@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-package error;
+package common;
+
+message Empty {}
 
 message ErrorStatus {
   uint32 code = 1;
