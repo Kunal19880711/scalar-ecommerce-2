@@ -16,7 +16,7 @@ export default class SimpleMongoGrpcServiceBuilder {
         );
         callback(null, {
           success: true,
-          message: `${entityName}(s/es) fetched successfully`,
+          message: `${this.entityName}(s/es) fetched successfully`,
           data,
         });
       } catch (err) {
@@ -111,8 +111,8 @@ export default class SimpleMongoGrpcServiceBuilder {
       new GrpcError(errorStatus.NOT_FOUND, `${this.entityName} not found`)
     );
   }
-  
-   sendInternalServerError(callback, err) {
+
+  sendInternalServerError(callback, err) {
     sendError(
       callback,
       new GrpcError(err.message, errorStatus.INTERNAL_SERVER_ERROR)
