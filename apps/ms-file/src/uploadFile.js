@@ -79,6 +79,9 @@ const uploadFileToBucket = (state) => {
               resumable: true,
               predefinedAcl: "publicRead",
             });
+            state.writestream.on("error", (err) => {
+              reject(err);
+            });
             state.writestream.write(buffer);
           }
         } else {
@@ -97,6 +100,10 @@ const uploadFileToBucket = (state) => {
         ext: detectedFileType.ext,
       };
       resolve(fileInfo);
+    });
+
+    state.call.on("error", (err) => {
+      reject(err);
     });
   });
 };
