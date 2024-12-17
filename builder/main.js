@@ -14,10 +14,8 @@ main();
 
 function setup() {
   const dirname = import.meta.dirname;
-  const projectRoot = path.normalize(
-    path.join(dirname, ...new Array(3).fill(".."))
-  );
-  console.log(projectRoot);
+  const projectRoot = path.normalize(path.join(dirname, ".."));
+  console.log(`Current dir: [${projectRoot}]`);
   process.chdir(projectRoot);
 }
 

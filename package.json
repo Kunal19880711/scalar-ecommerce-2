@@ -3,11 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
-  "scripts": {},
+  "main": "builder/main.js",
+  "scripts": {
+    "build-docker": "node . build",
+    "start": "node . start",
+    "stop": "node . stop",
+    "deploy": "node . deploy"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
   "devDependencies": {
     "nx": "20.1.4"
   }
