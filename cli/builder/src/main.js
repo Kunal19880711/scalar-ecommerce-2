@@ -1,9 +1,9 @@
 import path from "path";
 import fs from "fs";
 import { spawn } from "child_process";
+const { program } = await import("commander");
 
-const dirname = import.meta.dirname;
-const ALL = "all";
+const allServices = ["ms-controlpanel", "ms-file"];
 const projectName = "scalar-e-commerce";
 const region = "us-central1";
 
@@ -27,8 +27,6 @@ async function main() {
 }
 
 async function runProgram() {
-  const { program } = await import("commander");
-
   program
     .command("build")
     .description(`build docker image: [${DOCKER_IMG_NAME}]`)
@@ -46,58 +44,68 @@ async function runProgram() {
 
   program
     .command("deploy")
-    .description("deploy services to gcloud")
+    .description("deploy to gcloud")
+    .option(
+      "-s, --service <service>",
+      "name of service, if a single service is to be deployed"
+    )
     .option("-f, --key-file <file>", "path of the gcloud key file")
-    .action(deployServices);
+    .action(deployToGcloud);
 
   program.parse(process.argv);
 }
 
-async function buildDockerImage(services) {
+async function buildDockerImage() {
   await asyncRun(
     `docker build --target ${DOCKER_TARGET} -t ${DOCKER_IMG_NAME} .`
   );
 }
 
-async function startDockerCompose(services, options) {
+async function startDockerCompose() {
   const envVars = {
     CONFIG_YAML: fs.readFileSync("./config.yaml", "utf8"),
   };
   await asyncRun("docker compose up -d", { envVars });
 }
 
-async function stopDockerCompose(services) {
+async function stopDockerCompose() {
   await asyncRun("docker compose down");
 }
 
-async function deployServices(services, options) {
-  const requestedServices = getServices(services);
-  const isKeyFileProvided = options.keyFile && (await isFileExists(keyFile));
-
-  await buildDockerImage(services);
-  for (const service of requestedServices) {
-    const imageName = getDockerImageName(service);
-    const gCloudImageName = `gcr.io/${projectName}/${imageName}`;
-    const gcloudServiceName = getGcloudServiceName(service);
-    if (isKeyFileProvided) {
-      await asyncRun(
-        `gcloud auth activate-service-account --key-file ${keyFile}`
-      );
-    }
-    await asyncRun("gcloud auth configure-docker --quiet");
-    await asyncRun(`gcloud config set project ${projectName} --quiet`);
-    await asyncRun(`docker tag ${imageName} ${gCloudImageName}`);
-    await asyncRun(`docker push ${gCloudImageName}`);
-    await asyncRun(
-      [
-        `gcloud run deploy ${gcloudServiceName}`,
-        `--image ${gCloudImageName}`,
-        "--port 8080",
-        "--platform managed",
-        `--region ${region}`,
-        "--allow-unauthenticated",
-      ].join(" ")
+async function deployToGcloud() {
+  const options = this.opts();
+  if (options.service && !allServices.includes(options.service)) {
+    console.error(
+      `Service [${options.service}] is not supported. Valid services are [${allServices}]`
     );
+    process.exit(1);
+  }
+
+  const isKeyFileProvided = options.keyFile && (await isFileExists(keyFile));
+  const gCloudImageName = `gcr.io/${projectName}/${DOCKER_IMG_NAME}`;
+  const services = options.service ? [options.service] : allServices;
+  await buildDockerImage();
+  if (isKeyFileProvided) {
+    await asyncRun(
+      `gcloud auth activate-service-account --key-file ${keyFile}`
+    );
+  }
+  await asyncRun("gcloud auth configure-docker --quiet");
+  await asyncRun(`gcloud config set project ${projectName} --quiet`);
+  await asyncRun(`docker tag ${DOCKER_IMG_NAME} ${gCloudImageName}`);
+  await asyncRun(`docker push ${gCloudImageName}`);
+  for (let service of services) {
+    const gcloudServiceName = getGcloudServiceName(service);
+    const cmd = [
+      `gcloud run deploy ${gcloudServiceName}`,
+      `--image ${gCloudImageName}`,
+      "--port 8080 --platform managed",
+      `--region ${region}`,
+      "--allow-unauthenticated",
+      `--command=pnpm --args=--filter --args=${service} --args=start`,
+      `--set-secrets CONFIG_YAML=CONFIG_YAML:latest`,
+    ].join(" ");
+    await asyncRun(cmd);
   }
 }
 
@@ -107,7 +115,7 @@ async function asyncRun(cmd, options = {}) {
   return new Promise((resolve, reject) => {
     const [program, ...args] = cmd.split(" ").filter(Boolean);
     const subprocess = spawn(program, args, {
-      env: envVars,
+      env: { ...process.env, ...envVars },
     });
 
     if (print) {
@@ -123,10 +131,6 @@ async function asyncRun(cmd, options = {}) {
       }
     });
   });
-}
-
-function getContainerName(service) {
-  return `sec2-${service}`;
 }
 
 function getGcloudServiceName(service) {
