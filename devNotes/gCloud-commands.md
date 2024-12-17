@@ -68,6 +68,18 @@
     gcloud components update
 ```
 
+11. Get URL of a running service
+
+```zsh
+    gcloud run services describe  sec2-ms-file --region us-central1 --format="value(status.address.url)"
+```
+
+12. Start grpcui for a given service with no authentication deployed on Cloud Run
+
+```zsh
+    grpcui -import-path  /home/kunal/Projects/scalar-e-commerce-2/protos   -proto common.proto -proto file.proto  sec2-ms-file-o2yq6mki4q-uc.a.run.app:443
+```
+
 # User credentials
 
 Reference: [Set up a local development environment](https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment)
