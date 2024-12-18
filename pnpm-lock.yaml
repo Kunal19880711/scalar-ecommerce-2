@@ -108,6 +108,37 @@ importers:
         specifier: ^3.1.7
         version: 3.1.7
 
+  apps/ms-product:
+    dependencies:
+      '@grpc/grpc-js':
+        specifier: ^1.12.4
+        version: 1.12.4
+      '@grpc/proto-loader':
+        specifier: ^0.7.13
+        version: 0.7.13
+      lib-config-app:
+        specifier: workspace:*
+        version: link:../../packages/lib-config-app
+      lib-config-db:
+        specifier: workspace:*
+        version: link:../../packages/lib-config-db
+      lib-error:
+        specifier: workspace:*
+        version: link:../../packages/lib-error
+      lib-utils-grpc:
+        specifier: workspace:*
+        version: link:../../packages/lib-utils-grpc
+      models:
+        specifier: workspace:*
+        version: link:../../packages/models
+      uuid:
+        specifier: ^11.0.3
+        version: 11.0.3
+    devDependencies:
+      nodemon:
+        specifier: ^3.1.7
+        version: 3.1.7
+
   apps/ui-controlpanel:
     dependencies:
       '@emotion/react':
@@ -186,12 +217,6 @@ importers:
       vite:
         specifier: ^5.4.10
         version: 5.4.11(@types/node@22.10.1)
-
-  cli/builder:
-    dependencies:
-      commander:
-        specifier: ^12.1.0
-        version: 12.1.0
 
   cli/db-migrations:
     dependencies:
