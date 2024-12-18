@@ -1,0 +1,27 @@
+{
+  "name": "ms-product",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon .",
+    "dev": "nodemon ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.12.4",
+    "@grpc/proto-loader": "^0.7.13",
+    "lib-config-app": "workspace:*",
+    "lib-config-db": "workspace:*",
+    "lib-error": "workspace:*",
+    "lib-utils-grpc": "workspace:*",
+    "models": "workspace:*",
+    "uuid": "^11.0.3"
+  }
+}

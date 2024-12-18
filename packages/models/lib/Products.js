@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { fileEntityName } from "./Files.js";
 
 export const productEntityName = "Products";
 export const productSchemaDef = {
@@ -6,6 +7,17 @@ export const productSchemaDef = {
     type: String,
     required: true,
   },
+  productDescription: {
+    type: String,
+    required: true,
+  },
+  productMedia: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: fileEntityName,
+      required: true,
+    },
+  ],
   productPrice: {
     type: Number,
     required: true,
@@ -32,7 +44,7 @@ export const productSchema = new mongoose.Schema(productSchemaDef, {
         return this.updatedAt.getTime();
       },
     },
-  }
+  },
 });
 
 const ProductModel = mongoose.model(productEntityName, productSchema);

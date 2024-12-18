@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+import "common.proto";
+import "file.proto";
+
+package product;
+
+service ProductService {
+  rpc CreateProduct(ProductInfo) returns (ProductResponse) {}
+  rpc ReadProduct(ProductId) returns (ExpandedProductResponse) {}
+  rpc ReadAllProducts(common.Empty) returns (ExpandedProductListResponse) {}
+  rpc PatchProduct(PatchProductRequest) returns (ProductResponse) {}
+  rpc DeleteProduct(ProductId) returns (ProductResponse) {}
+}
+
+message ProductId {
+  string id = 1;
+}
+
+message ProductInfo {
+  string productName = 1;
+  string productDescription = 2;
+  repeated string productMedia = 3;
+  double productPrice = 4;
+  bool isInStock = 5;
+  string category = 6;
+  
+}
+
+message PatchProductRequest {
+  string id = 1;
+  ProductInfo data = 2;
+}
+
+message Product {
+  string id = 1;
+  string productName = 2;
+  string productDescription = 3;
+  repeated string productMedia = 4;
+  double productPrice = 5;
+  bool isInStock = 6;
+  string category = 7;
+  uint64 createdAtTimestamp = 8;
+  uint64 updatedAtTimestamp = 9;
+}
+
+message ProductResponse {
+  bool success = 1;
+  string message = 2;
+  common.Error error = 3;
+  Product data = 4;
+}
+
+message ExpandedProduct {
+  string id = 1;
+  string productName = 2;
+  string productDescription = 3;
+  repeated file.FileInfo productMedia = 4;
+  double productPrice = 5;
+  bool isInStock = 6;
+  string category = 7;
+  uint64 createdAtTimestamp = 8;
+  uint64 updatedAtTimestamp = 9;
+}
+
+message ExpandedProductResponse {
+  bool success = 1;
+  string message = 2;
+  common.Error error = 3;
+  Product data = 4;
+}
+
+message ExpandedProductListResponse {
+  bool success = 1;
+  string message = 2;
+  common.Error error = 3;
+  repeated ExpandedProduct data = 4;
+}
+

@@ -7,10 +7,14 @@ export default class SimpleMongoGrpcServiceBuilder {
     this.entityName = options.entityName;
   }
 
-  createGetAll() {
+  createGetAll(options = {}) {
+    const expandOn = options.expandOn || [];
     return async (call, callback) => {
       try {
-        const entities = await this.model.find();
+        const entities = await this.getPromiseWithExpand(
+          this.model.find(),
+          expandOn
+        );
         const data = entities.map((entity) =>
           entity.toObject({ virtuals: true })
         );
@@ -25,10 +29,14 @@ export default class SimpleMongoGrpcServiceBuilder {
     };
   }
 
-  createGet() {
+  createGet(options = {}) {
+    const expandOn = options.expandOn || [];
     return async (call, callback) => {
       try {
-        const entity = await this.model.findById(call.request.id);
+        const entity = await this.getPromiseWithExpand(
+          this.model.findById(call.request.id),
+          expandOn
+        );
         if (!entity) {
           this.sendEntityNotFound(callback);
         } else {
@@ -51,22 +59,25 @@ export default class SimpleMongoGrpcServiceBuilder {
         const entity = await this.model.create(call.request);
         const savedEntity = await entity.save();
         const savedObject = savedEntity.toObject({ virtuals: true });
-        callback(null, savedObject);
+        callback(null, {
+          success: true,
+          message: `${this.entityName} created successfully`,
+          data: savedObject,
+        });
       } catch (err) {
         this.sendInternalServerError(callback, err);
       }
     };
   }
 
-  createUpdate() {
+  createPatch() {
     return async (call, callback) => {
       try {
         const entity = await this.model.findByIdAndUpdate(
           call.request.id,
-          call.request,
+          call.request.data,
           {
             new: true,
-            runValidators: true,
           }
         );
         if (!entity) {
@@ -117,5 +128,13 @@ export default class SimpleMongoGrpcServiceBuilder {
       callback,
       new GrpcError(err.message, errorStatus.INTERNAL_SERVER_ERROR)
     );
+  }
+
+  getPromiseWithExpand(origPromise, expandOn) {
+    let promise = origPromise;
+    for (let field of expandOn) {
+      promise = promise.populate(field);
+    }
+    return promise;
   }
 }
