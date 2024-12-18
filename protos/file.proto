@@ -8,12 +8,16 @@ package file;
 service FileService {
   rpc UploadFile (stream FileChunk) returns (FileInfoResponse);
   rpc ReadFileInfo(FileInfoId) returns (FileInfoResponse);
-  rpc ReadAllFileInfos(common.Empty) returns (AllFileInfoResponse);
+  rpc ReadAllFileInfos(common.Empty) returns (FileInfoListResponse);
 }
 
 // A chunk of the file being uploaded
 message FileChunk {
   bytes data = 1;
+}
+
+message FileInfoId {
+  string id = 1;
 }
 
 // Response after file upload
@@ -26,10 +30,6 @@ message FileInfo {
   uint64 updatedAtTimestamp = 6;
 }
 
-message FileInfoId {
-  string id = 1;
-}
-
 message FileInfoResponse {
   bool success = 1;
   string message = 2;
@@ -37,7 +37,7 @@ message FileInfoResponse {
   FileInfo data = 4;
 }
 
-message AllFileInfoResponse {
+message FileInfoListResponse {
   bool success = 1;
   string message = 2;
   common.Error error = 3;

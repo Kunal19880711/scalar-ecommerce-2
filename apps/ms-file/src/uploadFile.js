@@ -2,7 +2,7 @@ import { fileTypeFromBuffer } from "file-type";
 import { v6 as uuidv6 } from "uuid";
 
 import "lib-config-app";
-import File from "models/File";
+import File from "models/Files";
 import GrpcError, { sendError } from "lib-error/GrpcError";
 import errorStatus from "lib-error/errorStatus";
 

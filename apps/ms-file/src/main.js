@@ -4,7 +4,7 @@ import protoLoader from "@grpc/proto-loader";
 
 import "lib-config-app";
 import connectDb from "lib-config-db";
-import File from "models/File";
+import File from "models/Files";
 import SimpleMongoGrpcServiceBuilder from "lib-utils-grpc/SimpleMongoGrpcServiceBuilder";
 import { createGrpcServer } from "lib-utils-grpc/grpcServer";
 import { uploadFile } from "./uploadFile.js";
@@ -13,7 +13,7 @@ const dirname = import.meta.dirname;
 
 const packageDefinition = protoLoader.loadSync(
   path.join(dirname, ...new Array(3).fill(".."), "protos", "file.proto"),
-  { keepCase: true, longs: String, enums: String, defaults: true, oneofs: true }
+  { keepCase: true, longs: String, enums: String, oneofs: true }
 );
 const fileProto = grpc.loadPackageDefinition(packageDefinition).file;
 const simpleServiceProvider = new SimpleMongoGrpcServiceBuilder({
